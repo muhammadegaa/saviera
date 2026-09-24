@@ -1,0 +1,37 @@
+{
+  "homepage": {
+    "headline": "OPTIMUM COMFORT MEETS VERSATILITY",
+    "story": "SAVIERA is an eco-conscious fashion brand that provides size-inclusive, timeless and versatile fashion staples for anyone who cares about what they wear and how their clothes are made in an era of modern conscious consumption.",
+    "cta": "MORE OF OUR STORY",
+    "promoTitle": "Find Care Instructions on Your QR Code",
+    "promoBody": "Simple but Significant. Due to limited stock, we are only available to order through Instagram (message us) and Shopee. Thank you for the support! #SAVTOWEAR"
+  },
+  "about": {
+    "hero": "ABOUT THE BRAND",
+    "lead": "SAVIERA aspires to become a leading eco-conscious slow fashion brand, driven by a mission to transform Indonesia’s fashion landscape toward mindful and responsible consumption.",
+    "vision": "We envision a community where everyone can find their perfect fit, feel empowered, and express their individuality with confidence. Each SAVIERA piece is crafted with exceptional care and lasting quality, designed to make you feel good and made to last.",
+    "statusTitle": "CHANGING THE STATUS QUO",
+    "status": [
+      "SAVIERA was born out of the fear of doing nothing to confront the profound externalities of the fashion industry. Rooted in purpose and refined by vision, we are only at the beginning yet continuously evolving and perfecting our craft.",
+      "We challenge the norms of overproduction and consumerism that define Indonesia’s fashion landscape. Recognising the intricate web of stakeholders and processes behind every creation, we embrace sustainability through the lens of the triple bottom line — People, Planet, and Profit. The core of what we are doing? We are working tirelessly to shape a greener, more enduring future for fashion."
+    ],
+    "sentimentIntro": "In everything we do here, we always reflect on: The People, The Planet, and The Fashion Industry.",
+    "people": [
+      "Vital to support the local economy by locally sourcing our materials and producing in few of Indonesia’s hyperlocal cities.",
+      "Our trusted Cut, Make, and Trim partner, Arunika, embodies our values of precision and integrity. Their commitment to low-minimum production ensures mindful use of fabrics, reduces waste, and upholds fair labour practices.",
+      "Beyond production, we actively engage with local communities and like-minded initiatives that share our purpose: bridging the sustainability gap, championing slow fashion, and inspiring conscious, responsible consumption."
+    ],
+    "planet": [
+      "We are deeply committed to using materials that are organic, durable, and responsibly sourced, those that honour both craftsmanship and the planet. Our preferred fabrics include natural fibres (linen and cotton, organically grown variants) and green-certified lyocell and modal. We also cherish materials made with natural dyes, handwoven textiles, and carefully selected deadstock fabrics in natural compositions like cotton, linen, and silk.",
+      "Our packaging is simple, sustainable, and designed with purpose. Made from eco-friendly materials, it reflects our commitment to a low-waste lifestyle. Learn more through the QR code on your Thank You card.",
+      "We produce in small batches and offer pre-orders when needed to prevent overproduction and maintain thoughtful craftsmanship."
+    ],
+    "profit": [
+      "We limit each collection’s release, focusing on quality, versatility, and timeless design over quantity.",
+      "We refrain from frequent sales or promotions, allowing each piece to maintain its exclusivity and lasting value.",
+      "We nurture the understanding of value per use, conscious consumption, and soulful decisions.",
+      "We impose a clear and strict product returns policy (we do not accept returns)."
+    ],
+    "closing": "We champion continuous exploration, innovative eco-conscious solutions, and genuine collaboration with our community. Every step we take brings us closer to closing the sustainability gap by challenging industry norms and redefining fashion with purpose, responsibility, and lasting impact."
+  }
+}
