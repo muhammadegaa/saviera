@@ -96,43 +96,44 @@ export default function Layout({ children }) {
             </button>
           </div>
         </nav>
-        {menu && (
-          <div className="fade-in fixed inset-x-0 bottom-0 top-20 flex flex-col justify-between bg-primary-1 px-6 pb-10 pt-6 md:hidden">
-            <div className="flex flex-col">
-              {links.map((link) => (
-                <NavLink
-                  key={link.label}
-                  to={link.to}
-                  onClick={() => setMenu(false)}
-                  className="border-b border-secondary-1/60 py-5 font-aboreto text-2xl tracking-[0.14em]"
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-              <ul className="mt-6 flex flex-col gap-3 font-forum text-xl">
-                {products.map((product) => (
-                  <li key={product.slug}>
-                    <Link to={product.path} onClick={() => setMenu(false)}>
-                      {product.name} <span className="text-secondary-2/60">— {product.fabric.toLowerCase()}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex flex-col gap-3 font-montserrat text-xs tracking-[0.2em] text-accent-2">
-              <a href={orderLink("a piece from Vol 01. Archetypes")} target="_blank" rel="noreferrer">
-                ORDER ON WHATSAPP
-              </a>
-              <a href={SHOPEE_URL} target="_blank" rel="noreferrer">
-                SHOPEE
-              </a>
-              <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-                INSTAGRAM
-              </a>
-            </div>
-          </div>
-        )}
       </header>
+
+      {menu && (
+        <div className="fade-in fixed inset-x-0 bottom-0 top-20 z-[59] flex flex-col justify-between overflow-y-auto overscroll-contain bg-primary-1 px-6 pb-10 pt-6 md:hidden">
+          <div className="flex flex-col">
+            {links.map((link) => (
+              <NavLink
+                key={link.label}
+                to={link.to}
+                onClick={() => setMenu(false)}
+                className="border-b border-secondary-1/60 py-5 font-aboreto text-2xl tracking-[0.14em]"
+              >
+                {link.label}
+              </NavLink>
+            ))}
+            <ul className="mt-6 flex flex-col gap-3 font-forum text-xl">
+              {products.map((product) => (
+                <li key={product.slug}>
+                  <Link to={product.path} onClick={() => setMenu(false)}>
+                    {product.name} <span className="text-secondary-2/60">— {product.fabric.toLowerCase()}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex flex-col gap-3 font-montserrat text-xs tracking-[0.2em] text-accent-2">
+            <a href={orderLink("a piece from Vol 01. Archetypes")} target="_blank" rel="noreferrer">
+              ORDER ON WHATSAPP
+            </a>
+            <a href={SHOPEE_URL} target="_blank" rel="noreferrer">
+              SHOPEE
+            </a>
+            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+              INSTAGRAM
+            </a>
+          </div>
+        </div>
+      )}
 
       {search && (
         <div className="fixed inset-0 z-[70] bg-secondary-2/40" onClick={() => setSearch(false)}>
