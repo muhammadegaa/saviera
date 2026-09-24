@@ -1,70 +1,92 @@
-import { useEffect, useState } from "react";
-import Placeholder from "../components/Placeholder";
+import { useEffect } from "react";
+import Photo from "../components/Photo";
+import Reveal from "../components/Reveal";
 import { HEALR_INSTAGRAM_URL } from "../data/products";
 
-const slides = [
+const beliefs = [
   "Mimpi kami, semua orang Indonesia bisa punya akses ke kesehatan mental kapanpun dan dimanapun tanpa stigma.",
   "Saat ini kami dalam upaya berkelanjutan untuk mengembangkan infrastruktur teknologi dan sistem informasi yang paling tepat dalam membantu praktisi, platform, dan profesional di bidang kesehatan mental.",
   "Etika dan keamanan data selalu jadi prioritas kami dalam proses ini.",
 ];
 
-export default function Healr() {
-  const [index, setIndex] = useState(0);
+const link = "underline decoration-secondary-1 underline-offset-4 transition-colors hover:text-accent-2";
 
+export default function Healr() {
   useEffect(() => {
     document.title = "Healr - Saviera";
   }, []);
 
   return (
     <article className="bg-primary-2">
-      <section className="mx-auto max-w-3xl px-6 py-16 text-center">
-        <h1 className="font-aboreto text-4xl md:text-5xl">About Healr</h1>
-        <p className="mt-10 font-trap text-xl text-secondary-2 md:text-2xl">
-          <strong>A mission-driven organization</strong> that provides an <strong>advisory think tank</strong> for mental health and wellbeing practitioners, startups, and private practice owners.
+      <section className="mx-auto max-w-site px-6 pb-16 pt-10 md:px-12 md:pb-24 md:pt-16">
+        <Photo src="healr/logo" alt="Healr" eager className="h-16 w-16" />
+        <p className="fade-in mt-10 max-w-4xl font-forum text-3xl leading-snug md:text-6xl">
+          A mission-driven advisory think tank for mental health and wellbeing practitioners, startups, and private practice owners.
         </p>
       </section>
 
-      <section className="grid items-center bg-primary-1 md:grid-cols-2">
-        <Placeholder tone="mauve" label="Healr portrait placeholder" className="min-h-[420px] w-full" />
-        <div className="px-6 py-12 md:px-12">
-          <h2 className="font-aboreto text-3xl md:text-4xl">I’M MYRA SAVIERA</h2>
-          <p className="mt-6 font-trap">I love building and am passionate about the mental health industry. Working in technology-based organisations enables me to harness my business acumen, managerial skills, and leadership.</p>
-          <p className="mt-4 font-trap">During Covid, I was fortunate to be empowered by one of Indonesia&apos;s leading pioneers of mental health startups and grew their overall revenue to ~105% YoY, led 20+ initiatives and various product developments.</p>
-          <p className="mt-4 font-trap">My expertise in mental health and well-being spaces allows me to support your business in expanding and sustaining. I have the best of both worlds—business and mental health—a rare combination that widens the room you can work in.</p>
-          <p className="mt-4 font-forum text-2xl">We believe that by partnering up, we may advance and be better together.</p>
+      <section className="border-t border-secondary-1/60">
+        <div className="mx-auto grid max-w-site gap-10 px-6 py-16 md:grid-cols-[1fr_1.4fr] md:gap-20 md:px-12 md:py-24">
+          <Photo src="healr/myra" alt="Myra Saviera" className="aspect-[3/4] w-full max-w-md object-cover" />
+          <Reveal className="max-w-xl font-trap leading-relaxed">
+            <p className="font-unbounded text-[10px] tracking-[0.32em]">A NOTE FROM THE FOUNDER</p>
+            <h1 className="mt-4 font-aboreto text-3xl tracking-[0.08em] md:text-4xl">I’M MYRA SAVIERA</h1>
+            <p className="mt-6">
+              I love building and am passionate about the mental health industry. Working in technology-based organisations lets me use my business
+              acumen, managerial skills, and leadership.
+            </p>
+            <p className="mt-4">
+              During Covid, I was fortunate to be empowered by one of Indonesia&apos;s leading pioneers of mental health startups. I grew their overall
+              revenue to ~105% YoY and led 20+ initiatives and product developments.
+            </p>
+            <p className="mt-4">
+              My expertise in mental health and well-being lets me support your business as it expands and sustains itself. Business and mental health
+              together is a rare combination, and it widens the room you can work in.
+            </p>
+            <p className="mt-8 font-forum text-2xl leading-snug">We believe that by partnering up, we may advance and be better together.</p>
+          </Reveal>
         </div>
       </section>
 
-      <section className="px-6 py-16 text-center" aria-roledescription="carousel" aria-label="My Favorite Images">
-        <Placeholder tone={["ink", "clay", "sand"][index]} label="Healr slide placeholder" className="mx-auto aspect-[16/8] w-full max-w-site" />
-        <p className="mx-auto mt-8 max-w-2xl font-forum text-2xl">{slides[index]}</p>
-        <div className="mt-6 flex justify-center gap-4 font-montserrat text-sm">
-          <button type="button" aria-label="Previous slide" disabled={index === 0} onClick={() => setIndex((current) => current - 1)} className="disabled:opacity-30">
-            Previous slide
-          </button>
-          <button type="button" aria-label="Next slide" disabled={index === slides.length - 1} onClick={() => setIndex((current) => current + 1)} className="disabled:opacity-30">
-            Next slide
-          </button>
-        </div>
+      <section className="bg-primary-1 px-6 py-20 md:px-12 md:py-28">
+        <ol className="mx-auto max-w-site">
+          {beliefs.map((belief, index) => (
+            <Reveal key={belief}>
+              <li className="grid gap-3 border-t border-secondary-1 py-8 md:grid-cols-[6rem_1fr]">
+                <span className="font-unbounded text-[10px] tracking-[0.24em] text-secondary-1">0{index + 1}</span>
+                <p className="max-w-3xl font-forum text-2xl leading-snug md:text-3xl">{belief}</p>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
       </section>
 
-      <section className="bg-secondary-2 px-6 py-20 text-center text-primary-2">
-        <h2 className="font-aboreto text-4xl">Tap into the better side of things .</h2>
-        <p className="mt-4 font-trap">Ready to achieve a better work-life balance through a well-managed and sustainable business?</p>
-        <p className="mt-3 font-trap">Book a quick 15-minute call with us to figure out what you need. Free of charge.</p>
-        <a
-          href="mailto:hi.healr@gmail.com"
-          className="mt-8 inline-block border border-primary-2 px-6 py-4 font-montserrat"
-        >
-          We are currently open for collaborations and consultations, starting from US$20/hour (IDR 320,000)
-        </a>
-        <p className="mt-6 font-trap">
-          Limited pro-bono program available, send us an email:{" "}
-          <a className="underline" href="mailto:hi.healr@gmail.com">hi.healr@gmail.com</a>
-        </p>
-        <a href={HEALR_INSTAGRAM_URL} target="_blank" rel="noreferrer" className="mt-8 inline-block font-unbounded text-xs tracking-[0.22em]">
-          @healr.care
-        </a>
+      <section className="bg-secondary-2 px-6 py-20 text-primary-2 md:px-12 md:py-28">
+        <div className="mx-auto max-w-3xl font-trap leading-relaxed">
+          <h2 className="font-forum text-4xl md:text-5xl">Tap into the better side of things.</h2>
+          <p className="mt-6">
+            If you want a better work-life balance through a well-managed, sustainable business, start with a free 15-minute call. Pick a time on{" "}
+            <a className={link} href="https://calendly.com/hi-healr" target="_blank" rel="noreferrer">
+              Calendly
+            </a>{" "}
+            or write to{" "}
+            <a className={link} href="mailto:hi.healr@gmail.com">
+              hi.healr@gmail.com
+            </a>
+            .
+          </p>
+          <p className="mt-4">
+            Collaborations and consultations start from US$20 an hour (IDR 320,000). A limited pro-bono programme is available; ask by email.
+          </p>
+          <p className="mt-10 flex gap-8 font-montserrat text-xs tracking-[0.22em]">
+            <a href={HEALR_INSTAGRAM_URL} target="_blank" rel="noreferrer" className="hover:text-secondary-1">
+              @HEALR.CARE
+            </a>
+            <a href="https://medium.com/@msaviera" target="_blank" rel="noreferrer" className="hover:text-secondary-1">
+              MEDIUM
+            </a>
+          </p>
+        </div>
       </section>
     </article>
   );

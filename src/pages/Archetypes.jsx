@@ -1,112 +1,112 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Placeholder from "../components/Placeholder";
-import Reveal from "../components/Reveal";
+import Photo from "../components/Photo";
+import Reveal, { Letters } from "../components/Reveal";
+import { IconArrow } from "../components/Icons";
 import { products } from "../data/products";
 
 const materials = [
   ["100% organic cotton", "Bandung"],
   ["Pure linen", "Jakarta"],
   ["Pure cotton deadstock", "Jakarta"],
-  ["Clothing label made from cotton", "Bojenegoro"],
+  ["Clothing label made from cotton", "Bojonegoro"],
   ["Hang tag made from recycled paper", "Jakarta"],
-  ["Poly mailer bag is oxo-biodegradable", "Sukoharjo"],
-  ["Thank you card made from repurposed sketching paper and hand-painted by MS", "Jakarta"],
-  ["Cut, trimmed and manufactured by Arunika", "Jakarta"],
+  ["Poly mailer bag, oxo-biodegradable", "Sukoharjo"],
+  ["Thank-you card, repurposed sketching paper hand-painted by MS", "Jakarta"],
+  ["Cut, made and trimmed by Arunika", "Jakarta"],
 ];
 
-const moods = ["Slow linen", "Late office light", "Weekend market", "Quiet overture"];
-
 export default function Archetypes() {
-  const [index, setIndex] = useState(0);
-  const product = products[index];
-
   useEffect(() => {
     document.title = "Vol 1. Archetypes Initial Collection - Saviera";
   }, []);
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
-    const timer = setInterval(() => setIndex((current) => (current + 1) % products.length), 5000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <article className="bg-primary-1">
-      <header className="mx-auto max-w-3xl px-6 pb-10 pt-8 text-center">
-        <p className="font-unbounded text-[11px] tracking-[0.28em]">VOL 01</p>
-        <h1 className="mt-3 font-aboreto text-5xl tracking-[0.14em] md:text-8xl">ARCHETYPES</h1>
-        <p className="mt-7 font-trap text-secondary-2">
-          Like an Opera with an Overture, Archetypes mark the commencement of our{" "}
-          <strong>limited initial collection.</strong>
-        </p>
-        <p className="mt-4 font-trap">
-          ARCHETYPES inspired by and represent collective individuals that are:
-          <br />
-          unique, original, confident, and self-compassionate.
-        </p>
+    <article>
+      <header className="mx-auto max-w-site px-6 pb-12 pt-10 md:px-12 md:pb-16 md:pt-14">
+        <p className="font-unbounded text-[10px] tracking-[0.32em]">VOL 01 · THE INITIAL COLLECTION</p>
+        <h1 className="mt-4 whitespace-nowrap font-aboreto text-[12vw] leading-none tracking-[0.08em] md:text-[10.5vw]">
+          <Letters text="ARCHETYPES" step={55} />
+        </h1>
+        <div className="mt-8 grid gap-6 md:grid-cols-2 md:gap-16">
+          <p className="fade-in font-forum text-2xl leading-snug md:text-3xl" style={{ animationDelay: "700ms" }}>
+            Like an opera with an overture, Archetypes open our limited initial collection.
+          </p>
+          <p className="fade-in max-w-md font-trap leading-relaxed" style={{ animationDelay: "900ms" }}>
+            Three pieces for people who are unique, original, confident and self-compassionate. Minimal, in earth tones, free size,
+            breathable. Wear them to a business meeting, a casual office day, or the weekend.
+          </p>
+        </div>
       </header>
 
-      <section className="relative mx-auto max-w-site px-6" aria-roledescription="carousel" aria-label="Archetypes">
-        <Reveal>
-          <div className="grid items-center gap-8 md:grid-cols-2">
-            <Placeholder tone={product.tone} label={`${product.name} collection placeholder`} className="aspect-[4/5] w-full" />
-            <div>
-              <p className="font-unbounded text-[11px] tracking-[0.22em] text-accent-2">
-                Minimalistic · Earth tone colors · Free sizes · Breathable and effortlessly chic
+      <div className="overflow-hidden">
+        <Photo
+          src={{ path: "collection/three", hd: true }}
+          alt="Wei Yi in brown, Wei Yi in taupe and Omnia, worn together"
+          eager
+          className="kenburns aspect-[4/3] w-full object-cover md:aspect-[16/7]"
+        />
+      </div>
+
+      {products.map((product, index) => {
+        const [first, second] = product.colors[0].photos;
+        const flip = index % 2 === 1;
+        return (
+          <section key={product.slug} className="mx-auto grid max-w-site items-center gap-8 px-6 py-20 md:grid-cols-2 md:gap-16 md:px-12 md:py-32">
+            <Reveal from={flip ? "translate-x-10" : "-translate-x-10"} className={`grid grid-cols-[3fr_2fr] items-end gap-2 ${flip ? "md:order-2" : ""}`}>
+              <Photo src={first} alt={`${product.name} in ${product.colors[0].name}`} sizes="(min-width: 768px) 30vw, 55vw" className="aspect-[3/4] w-full object-cover" />
+              {second && (
+                <Photo src={second} alt={`${product.name}, another view`} sizes="(min-width: 768px) 20vw, 38vw" className="aspect-[3/4] w-full object-cover" />
+              )}
+            </Reveal>
+            <Reveal delay={120}>
+              <p className="font-unbounded text-[10px] tracking-[0.28em]">
+                0{index + 1} · {product.fabric.toUpperCase()}
               </p>
-              <h2 className="mt-4 font-aboreto text-5xl">{product.title}</h2>
-              <p className="mt-4 font-trap">{product.summary}</p>
-              <Link to={product.path} className="mt-6 inline-flex border border-accent-2 px-8 py-3 font-montserrat text-accent-2">
-                MORE
+              <h2 className="mt-3 font-aboreto text-5xl tracking-[0.08em] md:text-7xl">{product.title}</h2>
+              <p className="mt-3 font-forum text-2xl">{product.archetype}</p>
+              <p className="mt-5 max-w-md font-trap leading-relaxed">{product.story}</p>
+              <p className="mt-5 font-montserrat text-xs tracking-[0.16em]">
+                {product.colors.map((color) => color.name.toUpperCase()).join(" · ")}
+              </p>
+              <Link to={product.path} className="mt-8 inline-flex items-center bg-accent-2 px-8 py-4 font-montserrat text-xs font-medium tracking-[0.22em] text-primary-2">
+                SEE {product.title} <IconArrow />
               </Link>
-            </div>
+            </Reveal>
+          </section>
+        );
+      })}
+
+      <section className="bg-secondary-2 px-6 py-20 text-primary-2 md:px-12 md:py-32">
+        <div className="mx-auto grid max-w-site gap-12 md:grid-cols-[1fr_1.4fr]">
+          <div>
+            <p className="font-unbounded text-[10px] tracking-[0.32em] text-secondary-1">WHERE IT COMES FROM</p>
+            <h2 className="mt-4 font-forum text-4xl leading-tight md:text-6xl">Every material, and the town it comes from.</h2>
           </div>
-        </Reveal>
-        <div className="mt-6 flex justify-center gap-6 font-montserrat text-sm">
-          <button type="button" aria-label="Previous" onClick={() => setIndex((current) => (current + products.length - 1) % products.length)}>
-            Previous
-          </button>
-          <button type="button" aria-label="Next" onClick={() => setIndex((current) => (current + 1) % products.length)}>
-            Next
-          </button>
+          <ul className="font-trap">
+            {materials.map(([item, place]) => (
+              <li key={item} className="flex items-baseline gap-4 border-t border-primary-2/20 py-4 last:border-b">
+                <span>{item}</span>
+                <span className="flex-1 border-b border-dotted border-primary-2/30" />
+                <span className="font-unbounded text-[10px] tracking-[0.24em] text-secondary-1">{place.toUpperCase()}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-16 text-center font-trap">
-        <p>The collection provides essential staples that are versatile and purposeful.</p>
-        <p className="mt-3">Wear it for business meetings, for a casual office look, or on the weekends.</p>
-        <p className="mt-6">Below is information of materials, trims, and packaging used in our collection:</p>
-      </section>
-
-      <div className="mx-auto max-w-site overflow-x-auto px-6 pb-16">
-        <table className="w-full min-w-[640px] border-collapse text-left font-trap">
-          <thead>
-            <tr className="border-b border-secondary-1 font-montserrat text-sm">
-              <th className="py-3 pr-6">Materials, Trims and Packaging</th>
-              <th className="py-3">Manufactured in / Made in / Sourced from</th>
-            </tr>
-          </thead>
-          <tbody>
-            {materials.map(([item, place]) => (
-              <tr key={item} className="border-b border-secondary-1/30">
-                <td className="py-3 pr-6">{item}</td>
-                <td className="py-3">{place}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <section className="bg-cream-1 px-6 py-16">
-        <h2 className="text-center font-forum text-3xl">Playlist to accompany your day</h2>
-        <ul className="mx-auto mt-8 flex max-w-site flex-wrap justify-center gap-4">
-          {moods.map((mood) => (
-            <li key={mood} className="border border-secondary-2 px-5 py-3 font-montserrat text-sm">
-              {mood}
-            </li>
-          ))}
-        </ul>
+      <section className="mx-auto grid max-w-site items-center gap-10 px-6 py-20 md:grid-cols-[1.3fr_1fr] md:px-12 md:py-32">
+        <Photo src={{ path: "collection/linen", hd: true }} alt="Linen close to the body" className="aspect-[16/10] w-full object-cover" />
+        <div>
+          <h2 className="font-forum text-3xl md:text-4xl">A playlist to accompany your day</h2>
+          <iframe
+            title="Saviera playlist on Spotify"
+            src="https://open.spotify.com/embed/playlist/0q4jLDoBlFmj9ry2gyRFMo?utm_source=generator&theme=0"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            className="mt-6 h-[352px] w-full rounded-xl border-0"
+          />
+        </div>
       </section>
     </article>
   );

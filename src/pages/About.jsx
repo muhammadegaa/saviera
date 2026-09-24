@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import Placeholder from "../components/Placeholder";
-import Reveal from "../components/Reveal";
+import { useEffect } from "react";
+import Photo from "../components/Photo";
+import Reveal, { Letters } from "../components/Reveal";
 import { useContent } from "../lib/useContent";
 
 const values = [
@@ -13,100 +13,100 @@ const values = [
   ["iter", "A", "te", "I am willing to learn, grow, and explore. I support my growth. I show support to others, and I believe in collaboration for betterment."],
 ];
 
+const pillars = [
+  ["people", "The People", "about/people", "Two of the team holding Saviera mailer bags"],
+  ["planet", "The Planet", "about/planet", "A seedling held up to the light"],
+  ["profit", "The Profit", "about/profit", "A laptop and a phone on a work desk"],
+];
+
 export default function About() {
   const { content } = useContent();
   const about = content.about;
-  const [pillar, setPillar] = useState("people");
 
   useEffect(() => {
     document.title = "About Saviera";
   }, []);
 
-  const pillars = {
-    people: about.people,
-    planet: about.planet,
-    profit: about.profit,
-  };
-
   return (
     <>
-      <section className="relative -mt-20 aspect-[36/41] md:-mt-[100px] md:aspect-[12/5]">
-        <Placeholder tone="ink" label="About hero placeholder" className="absolute inset-0 h-full w-full" framed={false} />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="px-6 text-center font-aboreto text-2xl tracking-[0.2em] text-primary-2 md:text-5xl">{about.hero}</h1>
-        </div>
+      <section className="mx-auto max-w-site px-6 pb-16 pt-10 md:px-12 md:pb-24 md:pt-14">
+        <p className="font-unbounded text-[10px] tracking-[0.32em]">
+          <Letters text={about.hero} step={25} />
+        </p>
+        <p className="fade-in mt-8 max-w-5xl font-forum text-[2.2rem] leading-[1.1] md:text-7xl" style={{ animationDelay: "500ms" }}>
+          {about.lead}
+        </p>
       </section>
 
-      <section className="bg-primary-1 px-6 py-20">
-        <Reveal className="mx-auto max-w-3xl text-center font-trap text-2xl">
-          <p>{about.lead}</p>
-          <p className="mt-8">{about.vision}</p>
+      <div className="overflow-hidden">
+        <Photo src={{ path: "about/cloth", hd: true }} alt="Dark linen falling from a shoulder" eager className="kenburns aspect-[16/9] w-full object-cover md:aspect-[12/5]" />
+      </div>
+
+      <section className="mx-auto max-w-site px-6 py-20 md:px-12 md:py-32">
+        <Reveal className="md:ml-[40%]">
+          <p className="max-w-2xl font-trap text-lg leading-relaxed md:text-xl">{about.vision}</p>
         </Reveal>
       </section>
 
-      <section className="relative bg-primary-2">
-        <div className="grid md:grid-cols-2">
-          <Placeholder tone="clay" label="Status quo placeholder" className="min-h-[420px] w-full" />
-          <Reveal from="translate-x-10" className="flex items-center bg-white p-8 md:p-14">
-            <div>
-              <h2 className="font-aboreto text-3xl">{about.statusTitle}</h2>
-              {about.status.map((paragraph) => (
-                <p key={paragraph.slice(0, 24)} className="mt-5 font-trap leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+      <section className="bg-secondary-2 text-primary-2">
+        <div className="mx-auto grid max-w-site md:grid-cols-2">
+          <Photo src="about/hanging" alt="Garments drying on a line against a stone wall" className="aspect-square w-full object-cover md:aspect-auto md:h-full" />
+          <Reveal from="translate-x-10" className="px-6 py-16 md:px-14 md:py-24">
+            <h2 className="font-aboreto text-3xl tracking-[0.08em] md:text-4xl">{about.statusTitle}</h2>
+            {about.status.map((paragraph) => (
+              <p key={paragraph.slice(0, 24)} className="mt-6 max-w-lg font-trap leading-relaxed text-primary-2/85">
+                {paragraph}
+              </p>
+            ))}
           </Reveal>
         </div>
       </section>
 
-      <section className="mx-auto max-w-site px-6 py-20">
-        <p className="font-forum text-5xl leading-none md:text-7xl">OUR</p>
-        <p className="font-aboreto text-4xl tracking-[0.18em] md:text-6xl">SENTIMENT</p>
-        <p className="mt-6 max-w-2xl font-trap text-lg">{about.sentimentIntro}</p>
-        <div className="mt-10 flex gap-6 font-montserrat text-sm uppercase tracking-[0.18em]">
-          {["people", "planet", "profit"].map((key) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setPillar(key)}
-              className={pillar === key ? "border-b border-accent-1 text-accent-1" : ""}
-            >
-              {key}
-            </button>
+      <section className="mx-auto max-w-site px-6 py-20 md:px-12 md:py-32">
+        <p className="font-unbounded text-[10px] tracking-[0.32em]">OUR SENTIMENT</p>
+        <p className="mt-4 max-w-3xl font-forum text-3xl leading-snug md:text-5xl">{about.sentimentIntro}</p>
+        <div className="mt-16">
+          {pillars.map(([key, title, image, alt], index) => (
+            <Reveal key={key}>
+              <div className="grid gap-6 border-t border-secondary-1 py-10 md:grid-cols-[1fr_1.1fr_1.6fr] md:gap-12 md:py-14">
+                <div>
+                  <p className="font-unbounded text-[10px] tracking-[0.24em] text-secondary-1">0{index + 1}</p>
+                  <h3 className="mt-2 font-aboreto text-3xl tracking-[0.08em] md:text-4xl">{title}</h3>
+                </div>
+                <Photo src={image} alt={alt} className="aspect-[3/2] w-full object-cover" />
+                <ul className="space-y-4 font-trap leading-relaxed">
+                  {about[key].map((item) => (
+                    <li key={item.slice(0, 32)} className="border-l border-secondary-1 pl-4">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
           ))}
         </div>
-        <ul className="mt-8 max-w-3xl list-disc space-y-4 pl-5 font-trap">
-          {pillars[pillar].map((item) => (
-            <li key={item.slice(0, 32)}>{item}</li>
-          ))}
-        </ul>
-        <p className="mt-10 max-w-3xl font-trap">{about.closing}</p>
+        <p className="mt-6 max-w-3xl border-t border-secondary-1 pt-10 font-forum text-2xl leading-snug md:text-3xl">{about.closing}</p>
       </section>
 
-      <section className="bg-cream-1 px-6 py-20">
-        <h2 className="mx-auto max-w-3xl text-center font-forum text-3xl md:text-4xl">
-          Manifestations Words We Would Like to Share with You through our Values
-        </h2>
-        <div className="mx-auto mt-12 grid max-w-site gap-10 md:grid-cols-2">
-          {values.map((row) => (
-            <article key={row[row.length - 1].slice(0, 16)}>
-              <h3 className="font-aboreto text-3xl">
-                {row.length === 3 ? (
-                  <>
-                    <span className="text-accent-1">{row[0]}</span> {row[1]}
-                  </>
-                ) : (
-                  <>
-                    {row[0]} <span className="text-accent-1">{row[1]}</span>
-                    {row[2]}
-                  </>
-                )}
-              </h3>
-              <p className="mt-3 font-trap">{row[row.length - 1]}</p>
-            </article>
-          ))}
+      <section className="bg-cream-1 px-6 py-20 md:px-12 md:py-32">
+        <div className="mx-auto max-w-site">
+          <p className="font-unbounded text-[10px] tracking-[0.32em]">OUR VALUES</p>
+          <h2 className="mt-4 max-w-2xl font-forum text-3xl md:text-5xl">Words we hold ourselves to, one for each letter.</h2>
+          <ol className="mt-14">
+            {values.map((row) => {
+              const letter = row.length === 3 ? row[0] : row[1];
+              const word = row.length === 3 ? row[0] + row[1] : row[0] + row[1] + row[2];
+              return (
+                <li key={word} className="grid grid-cols-[3.5rem_1fr] gap-4 border-t border-secondary-1/60 py-6 md:grid-cols-[7rem_16rem_1fr] md:items-baseline md:gap-10">
+                  <span className="font-aboreto text-5xl text-accent-1 md:text-7xl">{letter}</span>
+                  <div className="md:contents">
+                    <h3 className="font-aboreto text-2xl tracking-[0.08em]">{word}</h3>
+                    <p className="mt-2 max-w-xl font-trap leading-relaxed md:mt-0">{row[row.length - 1]}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </section>
     </>

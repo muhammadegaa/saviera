@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Placeholder from "../components/Placeholder";
+import Photo from "../components/Photo";
 import { products } from "../data/products";
 
 export default function SavToWear() {
@@ -12,8 +12,13 @@ export default function SavToWear() {
 
   return (
     <article>
-      <header className="relative -mt-20 md:-mt-[100px]">
-        <Placeholder tone="sand" label="Sav to wear hero placeholder" className="aspect-[36/28] w-full md:aspect-[12/5]" />
+      <header className="relative overflow-hidden">
+        <Photo
+          src={{ path: "collection/linen", hd: true }}
+          alt="Linen close to the body"
+          eager
+          className="kenburns aspect-[4/5] w-full object-cover md:aspect-[12/5]"
+        />
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/45 px-6 text-center text-primary-2">
           <h1 className="font-aboreto text-4xl tracking-[0.14em] md:text-6xl">YAY! YOU HAVE MADE IT!</h1>
           <p className="mt-5 max-w-xl font-trap">
@@ -70,6 +75,11 @@ export default function SavToWear() {
       </section>
 
       <section id="recycle-packaging" className="mx-auto max-w-3xl px-6 py-16 font-trap">
+        <div className="mb-10 grid grid-cols-3 gap-2">
+          <Photo src="packaging/mailer" alt="The oxo-biodegradable mailer bag" className="aspect-square w-full object-cover" />
+          <Photo src="packaging/tissue" alt="Compostable tissue wrap and recycled-paper hang tags" className="aspect-square w-full object-cover" />
+          <Photo src="packaging/thank-you" alt="Hand-painted thank-you cards" className="aspect-square w-full object-cover" />
+        </div>
         <h2 className="font-montserrat text-3xl font-bold">Eco-Packaging</h2>
         <p className="mt-3">Know how to repurpose, reuse and recycle your order packaging.</p>
         <p className="mt-6">Your poly mailer bag is oxo-biodegradable. Which means, in two years, it will break off. In the meantime, you can reuse it as a desk-trash bin until it reaches its life cycle.</p>

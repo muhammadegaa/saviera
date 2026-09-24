@@ -25,21 +25,64 @@ body {
   }
 }
 
-@keyframes ticker {
+@keyframes sway {
   from {
-    transform: translateX(0);
+    transform: rotate(-1.2deg);
   }
   to {
-    transform: translateX(-50%);
+    transform: rotate(1.2deg);
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
 .kenburns {
-  animation: drift 14s ease-out forwards;
+  animation: drift 18s ease-in-out infinite alternate;
 }
 
-.ticker-track {
-  animation: ticker 36s linear infinite;
+.sway {
+  transform-origin: 50% 0;
+  animation: sway 7s ease-in-out infinite alternate;
+}
+
+.rise {
+  display: inline-block;
+  animation: rise 1.2s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+.enter {
+  animation: enter 0.8s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+.fade-in {
+  animation: fade 1.4s ease both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -48,7 +91,10 @@ body {
   }
 
   .kenburns,
-  .ticker-track {
+  .sway,
+  .rise,
+  .enter,
+  .fade-in {
     animation: none;
   }
 }

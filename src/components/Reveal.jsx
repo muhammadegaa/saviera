@@ -23,7 +23,7 @@ export default function Reveal({
           observer.disconnect();
         }
       },
-      { threshold: 0.2 },
+      { threshold: 0.1 },
     );
     observer.observe(node);
     return () => observer.disconnect();
@@ -39,5 +39,19 @@ export default function Reveal({
     >
       {children}
     </div>
+  );
+}
+
+export function Letters({ text, delay = 0, step = 70 }) {
+  return (
+    <span aria-label={text} className="inline-block">
+      {[...text].map((char, index) => (
+        <span key={`${char}-${index}`} aria-hidden="true" className="inline-block overflow-hidden align-bottom">
+          <span className="rise" style={{ animationDelay: `${delay + index * step}ms` }}>
+            {char === " " ? "\u00a0" : char}
+          </span>
+        </span>
+      ))}
+    </span>
   );
 }

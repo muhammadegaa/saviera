@@ -6,17 +6,10 @@ import {
   INSTAGRAM_URL,
   PINTEREST_URL,
   SHOPEE_URL,
+  orderLink,
   products,
 } from "../data/products";
-import {
-  IconArrow,
-  IconFacebook,
-  IconInstagram,
-  IconMail,
-  IconMenu,
-  IconSearch,
-  IconShopee,
-} from "./Icons";
+import { IconArrow, IconInstagram, IconMenu, IconSearch, IconShopee } from "./Icons";
 
 const links = [
   { to: "/01-archetypes", label: "VOL 01. ARCHETYPES" },
@@ -24,83 +17,79 @@ const links = [
   { to: "/about-us", label: "ABOUT US" },
 ];
 
-function lightAtTop(pathname) {
-  return pathname === "/" || pathname === "/about-us";
-}
-
 export default function Layout({ children }) {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const navigate = useNavigate();
   const [atTop, setAtTop] = useState(true);
   const [menu, setMenu] = useState(false);
   const [search, setSearch] = useState(false);
   const [query, setQuery] = useState("");
+  const home = pathname === "/";
   const healr = pathname === "/healr";
-  const light = atTop && lightAtTop(pathname);
 
   useEffect(() => {
-    const onScroll = () => setAtTop(window.scrollY < 8);
+    const onScroll = () => setAtTop(window.scrollY < 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     setMenu(false);
     setSearch(false);
-  }, [pathname]);
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    const timer = setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView(), 50);
+    return () => clearTimeout(timer);
+  }, [pathname, hash]);
 
-  const matches = products.filter((product) =>
-    product.name.toLowerCase().includes(query.trim().toLowerCase()),
-  );
+  useEffect(() => {
+    document.body.style.overflow = menu || search ? "hidden" : "";
+  }, [menu, search]);
 
-  const tone = light ? "text-primary-2" : "text-secondary-2";
-  const bar = light
-    ? "bg-transparent"
-    : "bg-[#c8c8c8] md:bg-primary-1";
+  const matches = products.filter((product) => product.name.toLowerCase().includes(query.trim().toLowerCase()));
 
   return (
     <div className="min-h-screen bg-primary-1 text-secondary-2">
-      <header className={`sticky top-0 z-[60] transition-colors duration-500 ${bar}`}>
-        <nav className="mx-auto grid h-20 max-w-site grid-cols-[auto_1fr_auto] items-center gap-4 px-6 md:h-[100px] md:grid-cols-[1fr_auto_1fr]">
-          <div className={`hidden items-center justify-between pr-10 font-montserrat text-[11px] tracking-[0.18em] md:flex ${tone}`}>
-            {links.map((link) =>
-              link.to.startsWith("/#") ? (
-                <a key={link.label} href={link.to}>
-                  {link.label}
-                </a>
-              ) : (
-                <NavLink key={link.label} to={link.to}>
-                  {link.label}
-                </NavLink>
-              ),
-            )}
+      <header
+        className={`sticky top-0 z-[60] transition-colors duration-500 ${
+          atTop ? "bg-primary-1" : "bg-primary-1/90 backdrop-blur-md"
+        }`}
+      >
+        <nav className="mx-auto grid h-20 max-w-site grid-cols-[1fr_auto] items-center px-6 md:h-[100px] md:grid-cols-[1fr_auto_1fr] md:px-12">
+          <div className="hidden gap-10 font-montserrat text-[11px] tracking-[0.18em] md:flex">
+            {links.map((link) => (
+              <NavLink key={link.label} to={link.to} className="transition-colors hover:text-accent-1">
+                {link.label}
+              </NavLink>
+            ))}
           </div>
           <Link
             to="/"
-            className={`col-start-2 justify-self-center px-6 font-aboreto text-2xl tracking-[0.42em] md:px-10 md:text-3xl ${tone}`}
             aria-label="Saviera home"
+            className={`font-aboreto text-xl tracking-[0.36em] transition-opacity duration-500 md:text-3xl md:tracking-[0.42em] ${
+              home && atTop ? "opacity-0" : "opacity-100"
+            }`}
           >
             SAVIERA
           </Link>
-          <div className={`col-start-3 flex items-center justify-end ${tone}`}>
-            <a href={SHOPEE_URL} target="_blank" rel="noreferrer" aria-label="Shopee" className="mr-4">
+          <div className="flex items-center justify-end gap-3 md:gap-4">
+            <a href={SHOPEE_URL} target="_blank" rel="noreferrer" aria-label="Shopee" className="hidden md:inline-flex">
               <IconShopee />
             </a>
-            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Instagram" className="mr-4">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Instagram">
               <IconInstagram />
             </a>
-            <a href={FACEBOOK_URL} target="_blank" rel="noreferrer" aria-label="Facebook" className="mr-2 hidden md:inline-flex">
-              <IconFacebook />
-            </a>
-            <button type="button" aria-label="Search" onClick={() => setSearch(true)} className="ml-2">
+            <button type="button" aria-label="Search" onClick={() => setSearch(true)}>
               <IconSearch />
             </button>
             <button
               type="button"
-              className="ml-3 md:hidden"
+              className="md:hidden"
               aria-label={menu ? "Close menu" : "Open menu"}
+              aria-expanded={menu}
               onClick={() => setMenu((open) => !open)}
             >
               <IconMenu open={menu} />
@@ -108,18 +97,39 @@ export default function Layout({ children }) {
           </div>
         </nav>
         {menu && (
-          <div className="flex flex-col gap-6 bg-primary-1 px-6 py-8 font-montserrat text-secondary-2 md:hidden">
-            {links.map((link) =>
-              link.to.startsWith("/#") ? (
-                <a key={link.label} href={link.to} onClick={() => setMenu(false)}>
-                  {link.label}
-                </a>
-              ) : (
-                <NavLink key={link.label} to={link.to} onClick={() => setMenu(false)}>
+          <div className="fade-in fixed inset-x-0 bottom-0 top-20 flex flex-col justify-between bg-primary-1 px-6 pb-10 pt-6 md:hidden">
+            <div className="flex flex-col">
+              {links.map((link) => (
+                <NavLink
+                  key={link.label}
+                  to={link.to}
+                  onClick={() => setMenu(false)}
+                  className="border-b border-secondary-1/60 py-5 font-aboreto text-2xl tracking-[0.14em]"
+                >
                   {link.label}
                 </NavLink>
-              ),
-            )}
+              ))}
+              <ul className="mt-6 flex flex-col gap-3 font-forum text-xl">
+                {products.map((product) => (
+                  <li key={product.slug}>
+                    <Link to={product.path} onClick={() => setMenu(false)}>
+                      {product.name} <span className="text-secondary-2/60">— {product.fabric.toLowerCase()}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3 font-montserrat text-xs tracking-[0.2em] text-accent-2">
+              <a href={orderLink("a piece from Vol 01. Archetypes")} target="_blank" rel="noreferrer">
+                ORDER ON WHATSAPP
+              </a>
+              <a href={SHOPEE_URL} target="_blank" rel="noreferrer">
+                SHOPEE
+              </a>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+                INSTAGRAM
+              </a>
+            </div>
           </div>
         )}
       </header>
@@ -127,7 +137,7 @@ export default function Layout({ children }) {
       {search && (
         <div className="fixed inset-0 z-[70] bg-secondary-2/40" onClick={() => setSearch(false)}>
           <form
-            className="mx-auto mt-28 max-w-xl bg-primary-1 p-6"
+            className="mx-4 mt-24 max-w-xl bg-primary-1 p-6 md:mx-auto md:mt-28"
             onClick={(event) => event.stopPropagation()}
             onSubmit={(event) => {
               event.preventDefault();
@@ -143,6 +153,7 @@ export default function Layout({ children }) {
               autoFocus
               value={query}
               onChange={(event) => setQuery(event.target.value)}
+              onKeyDown={(event) => event.key === "Escape" && setSearch(false)}
               className="mt-3 w-full border border-secondary-2 bg-transparent px-3 py-3 font-trap outline-none"
               placeholder="Omnia, Wei Yi, Cyanne"
             />
@@ -166,90 +177,73 @@ export default function Layout({ children }) {
         </div>
       )}
 
-      <main>{children}</main>
+      <main className="overflow-x-clip">{children}</main>
 
       {!healr && (
-        <footer className="bg-primary-1 px-6 pb-10 pt-16 text-secondary-2">
-          <div className="mx-auto flex max-w-site flex-col items-center gap-10 md:flex-row md:items-stretch md:justify-between">
-            <div className="max-w-sm text-center md:text-left">
-              <p className="font-aboreto text-4xl tracking-[0.28em]">SAVIERA</p>
-              <p className="mt-4 font-trap">
-                is an eco-conscious fashion brand that intentionally aims for a timeless, versatile, and original fashion staple.
+        <footer className="border-t border-secondary-1/60 bg-primary-1 px-6 pb-10 pt-16 md:px-12 md:pt-24">
+          <div className="mx-auto grid max-w-site gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+            <div>
+              <img src="/favicon.svg" alt="" className="h-12 w-12" />
+              <p className="mt-6 max-w-xs font-forum text-2xl leading-snug">
+                Timeless, free-size staples. Small batches, sourced and made in Indonesia.
               </p>
-              <p className="mt-3 text-center font-trap md:text-left">
-                Small batches.
-                <br />
-                Limited Drops.
-                <br />
-                Sourced and made locally
-              </p>
-              <div className="mt-5 flex flex-col items-center gap-2 md:items-start">
-                <FooterLink to="/01-archetypes">Vol 01. Archetypes</FooterLink>
-                <FooterLink to="/sav-to-wear-01">Feedback & Reviews</FooterLink>
-                <FooterLink to="/about-us">FAQ</FooterLink>
-              </div>
             </div>
-            <span className="h-px w-2/5 bg-secondary-1 md:h-auto md:w-px" />
-            <div className="w-full max-w-sm text-center">
-              <p className="font-aboreto text-3xl">HERE FOR YOU</p>
-              <p className="mb-3 mt-3 font-trap">
-                Order,
-                <br />
-                Complaints,
-                <br />
-                Inquiries, and
-                <br />
-                Feedback:
-              </p>
-              <a className="mt-2 hidden items-center justify-center gap-2 rounded border border-accent-2 py-3 text-accent-2 md:flex" href="mailto:fairy@saviera.co">
-                <IconMail /> Email us: fairy@saviera.co
-              </a>
-              <p className="py-2 text-center opacity-50">or</p>
-              <a className="hidden items-center justify-center gap-2 rounded border border-accent-2 py-3 text-accent-2 md:flex" href="mailto:saviera.starlist@gmail.com">
-                <IconMail /> saviera.starlist@gmail.com
-              </a>
-              <div className="mt-4 bg-cream-1 p-3 font-trap">
-                <strong>Shop anytime, from anywhere</strong>
-              </div>
-            </div>
-            <span className="h-px w-2/5 bg-secondary-1 md:h-auto md:w-px" />
-            <div className="text-center md:text-left">
-              <p className="font-unbounded text-xs tracking-[0.2em]">KEEP IN TOUCH</p>
-              <div className="mt-4 flex flex-col gap-2 font-montserrat">
-                <a href={FACEBOOK_URL} target="_blank" rel="noreferrer">Facebook</a>
-                <a href={PINTEREST_URL} target="_blank" rel="noreferrer">Pinterest</a>
-                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
-                <a href={SHOPEE_URL} target="_blank" rel="noreferrer">Shop 24/7</a>
-              </div>
-              <form
-                className="relative mt-6"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  setSearch(true);
-                }}
-              >
-                <input
-                  aria-label="Search the item here"
-                  placeholder="Search the item here"
-                  className="w-full border border-secondary-2 bg-transparent px-3 py-2 font-poppins text-sm"
-                  onFocus={() => setSearch(true)}
-                  readOnly
-                />
-              </form>
-            </div>
+            <FooterColumn title="SHOP">
+              {products.map((product) => (
+                <FooterLink key={product.slug} to={product.path}>
+                  {product.name}
+                </FooterLink>
+              ))}
+              <FooterLink to="/01-archetypes">Vol 01. Archetypes</FooterLink>
+            </FooterColumn>
+            <FooterColumn title="ORDER">
+              <FooterLink href={orderLink("a piece from Vol 01. Archetypes")}>WhatsApp</FooterLink>
+              <FooterLink href={SHOPEE_URL}>Shopee</FooterLink>
+              <FooterLink href={INSTAGRAM_URL}>Instagram</FooterLink>
+              <FooterLink href="mailto:fairy@saviera.co">fairy@saviera.co</FooterLink>
+            </FooterColumn>
+            <FooterColumn title="SAVIERA">
+              <FooterLink to="/about-us">About us</FooterLink>
+              <FooterLink to="/sav-to-wear-01">Care & packaging</FooterLink>
+              <FooterLink href={FACEBOOK_URL}>Facebook</FooterLink>
+              <FooterLink href={PINTEREST_URL}>Pinterest</FooterLink>
+            </FooterColumn>
           </div>
-          <p className="mt-12 text-center font-montserrat text-sm">Saviera © {dayjs().year()}</p>
+          <div className="mx-auto mt-16 flex max-w-site justify-between border-t border-secondary-1/40 pt-6 font-montserrat text-xs">
+            <p>Saviera © {dayjs().year()}</p>
+            <p>Jakarta, Indonesia</p>
+          </div>
         </footer>
       )}
     </div>
   );
 }
 
-function FooterLink({ to, children }) {
+function FooterColumn({ title, children }) {
   return (
-    <Link to={to} className="inline-flex items-center font-montserrat text-accent-2">
-      {children}
+    <div>
+      <p className="font-unbounded text-[10px] tracking-[0.28em] text-secondary-1">{title}</p>
+      <div className="mt-5 flex flex-col items-start gap-3">{children}</div>
+    </div>
+  );
+}
+
+function FooterLink({ to, href, children }) {
+  const className = "group inline-flex items-center font-montserrat text-sm transition-colors hover:text-accent-2";
+  const arrow = (
+    <span className="opacity-0 transition-opacity group-hover:opacity-100">
       <IconArrow />
+    </span>
+  );
+  return to ? (
+    <Link to={to} className={className}>
+      {children}
+      {arrow}
     </Link>
+  ) : (
+    <a href={href} target="_blank" rel="noreferrer" className={className}>
+      {children}
+      {arrow}
+    </a>
   );
 }

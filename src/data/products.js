@@ -9,6 +9,8 @@ export function orderLink(product) {
   return `https://wa.me/628175199968?text=${encodeURIComponent(text)}`;
 }
 
+const hd = (path) => ({ path, hd: true });
+
 const careCotton = [
   "Cold Hand Wash",
   "Do not bleach, do not soak, do not use rinse agent, do not tumble dry, and do not dry clean",
@@ -26,10 +28,16 @@ export const products = [
     path: "/01-omnia",
     name: "Omnia",
     title: "OMNIA",
-    tone: "porcelain",
+    archetype: "For the day that wants two things.",
+    fabric: "Pure cotton, deadstock",
+    fit: [["Bust", "up to 115 cm"], ["Length", "101 cm, midi"], ["Under bust", "elastic, to 120 cm"]],
+    weekday: "Open, as an outer over a plain top and trousers.",
+    weekend: "Closed, as a summer dress with a slip underneath.",
+    makerName: "Pak Taswan",
+    makerPhoto: { src: "makers/taswan", alt: "Pak Taswan at his sewing machine" },
     summary:
       "A loungewear, casual outer, or a sexy summer dress with plunge deep V-neck with above-the-waist concealed elastic to give shape.",
-    colors: [{ name: "Off-white", tone: "offwhite" }],
+    colors: [{ name: "Off-white", hex: "#F3EEE4", photos: [hd("omnia/off-white-1"), hd("omnia/off-white-2"), "omnia/off-white-3", "omnia/off-white-4", "omnia/off-white-5", "omnia/off-white-7"] }],
     size: [
       "All size, Standard Fit",
       "Midi length 101 cm",
@@ -58,13 +66,19 @@ export const products = [
     path: "/01-wei-yi",
     name: "Wei Yi",
     title: "WEI YI",
-    tone: "taupe",
+    archetype: "For when you already know what you want.",
+    fabric: "Pure linen",
+    fit: [["Bust", "up to 114 cm buttoned, free open"], ["Length", "60.5 cm"], ["Sleeve", "25.5 cm"]],
+    weekday: "Buttoned, over a white tee, into the meeting.",
+    weekend: "Open, over a slip dress or a tank.",
+    makerName: "Pak Darto",
+    makerPhoto: { src: "makers/darto", alt: "Pak Darto in the workshop" },
     summary:
       "A relaxed, elegant, and fitting double-breasted blazer in asymmetrical cutting. Buttons inside, aiming for a sculptural look. This piece comes in three color selections: Mauve, Taupe, and Brown.",
     colors: [
-      { name: "Mauve", tone: "mauve" },
-      { name: "Taupe", tone: "taupe" },
-      { name: "Brown", tone: "brown" },
+      { name: "Mauve", hex: "#D9C9BF", photos: [hd("wei-yi/mauve-1"), hd("wei-yi/mauve-2"), hd("wei-yi/mauve-3"), "wei-yi/mauve-4"] },
+      { name: "Taupe", hex: "#B7AA98", photos: ["wei-yi/taupe-1"] },
+      { name: "Brown", hex: "#8A5530", photos: [hd("wei-yi/brown-1"), hd("wei-yi/brown-2"), hd("wei-yi/brown-3"), hd("wei-yi/brown-4")] },
     ],
     size: [
       "All size, Loose-Fit",
@@ -98,12 +112,18 @@ export const products = [
     path: "/01-cyanne",
     name: "Cyanne",
     title: "CYANNE",
-    tone: "ink",
+    archetype: "For calm, with a little heat.",
+    fabric: "Organic cotton, crinkle and slub",
+    fit: [["Bust", "120 cm tied, free loose"], ["Length", "77.5 cm"], ["Sleeve", "65.5 cm"]],
+    weekday: "Tied close and tucked into tailored trousers.",
+    weekend: "Left loose over a tank, belt hanging.",
+    makerName: "Pak Tata",
+    makerPhoto: { src: "makers/cutting", alt: "Cotton being cut by hand on the workshop table" },
     summary:
       "Wrap top that lasts beyond the season. Belt included (sewed in the back). Tailored details and material make this item a top-notch statement piece to wear. Tailored by artisans with a unique material hand.",
     colors: [
-      { name: "Charcoal", tone: "charcoal" },
-      { name: "Porcelain", tone: "porcelain" },
+      { name: "Charcoal", hex: "#2E2E30", photos: [hd("cyanne/charcoal-1"), hd("cyanne/charcoal-2"), hd("cyanne/charcoal-3"), "cyanne/charcoal-4"] },
+      { name: "Porcelain", hex: "#EFEDE8", photos: [hd("cyanne/porcelain-1"), hd("cyanne/porcelain-2"), hd("cyanne/porcelain-3"), "cyanne/porcelain-4"] },
     ],
     size: [
       "All sizes, Loose-Fit to Semi-Oversized",

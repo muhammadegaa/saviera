@@ -17,14 +17,6 @@ export function IconInstagram() {
   );
 }
 
-export function IconFacebook() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M18 26V17h3l1-4h-4v-2c0-1 .4-2 2-2h2V6h-3c-3 0-5 2-5 5v2h-3v4h3v9h4z" fill="currentColor" />
-    </svg>
-  );
-}
-
 export function IconSearch() {
   return (
     <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
@@ -50,15 +42,6 @@ export function IconArrow() {
   return (
     <svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" className="ml-2">
       <path d="M0 6h20M15 1l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1" />
-    </svg>
-  );
-}
-
-export function IconMail() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="3" y="5" width="18" height="14" fill="none" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M4 6l8 7 8-7" fill="none" stroke="currentColor" strokeWidth="1.4" />
     </svg>
   );
 }
