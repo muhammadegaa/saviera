@@ -44,7 +44,7 @@ export default function StoryHero({ headline }) {
               src={product.colors[0].photos[0]}
               alt={`${product.name} in ${product.colors[0].name}`}
               sizes="(min-width: 768px) 50vw, 100vw"
-              eager
+              priority={index === 0}
               className="kenburns h-full w-full object-cover object-[50%_18%]"
             />
             <span
