@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import JavaMap, { towns } from "../components/JavaMap";
 import Photo from "../components/Photo";
 import Reveal, { Letters } from "../components/Reveal";
 import { IconArrow } from "../components/Icons";
@@ -16,7 +17,12 @@ const materials = [
   ["Cut, made and trimmed by Arunika", "Jakarta"],
 ];
 
+const journey = Object.keys(towns)
+  .sort((a, b) => towns[b].km - towns[a].km)
+  .map((town) => [town, materials.filter(([, place]) => place === town).map(([item]) => item)]);
+
 export default function Archetypes() {
+  const [active, setActive] = useState(null);
   useEffect(() => {
     document.title = "Vol 1. Archetypes Initial Collection - Saviera";
   }, []);
@@ -78,20 +84,42 @@ export default function Archetypes() {
       })}
 
       <section className="bg-secondary-2 px-6 py-20 text-primary-2 md:px-12 md:py-32">
-        <div className="mx-auto grid max-w-site gap-12 md:grid-cols-[1fr_1.4fr]">
-          <div>
-            <p className="font-unbounded text-[10px] tracking-[0.32em] text-secondary-1">WHERE IT COMES FROM</p>
-            <h2 className="mt-4 font-forum text-4xl leading-tight md:text-6xl">Every material, and the town it comes from.</h2>
+        <div className="mx-auto max-w-site">
+          <p className="font-unbounded text-[10px] tracking-[0.32em] text-secondary-1">WHERE IT COMES FROM</p>
+          <h2 className="mt-4 max-w-3xl font-forum text-4xl leading-tight md:text-7xl">Eight materials. Four towns. One island.</h2>
+          <p className="mt-6 max-w-lg font-trap leading-relaxed text-primary-2/75">
+            Everything in Vol 01 is sourced or made on Java, then cut, made and trimmed at Arunika in Jakarta. Choose a material to see where it
+            starts.
+          </p>
+
+          <div className="mt-16 md:mt-20">
+            <JavaMap active={active} />
           </div>
-          <ul className="font-trap">
-            {materials.map(([item, place]) => (
-              <li key={item} className="flex items-baseline gap-4 border-t border-primary-2/20 py-4 last:border-b">
-                <span>{item}</span>
-                <span className="flex-1 border-b border-dotted border-primary-2/30" />
-                <span className="font-unbounded text-[10px] tracking-[0.24em] text-secondary-1">{place.toUpperCase()}</span>
+
+          <ol className="mt-14 md:mt-20" onMouseLeave={() => setActive(null)}>
+            {journey.map(([place, items]) => (
+              <li key={place}>
+                <button
+                  type="button"
+                  onMouseEnter={() => setActive(place)}
+                  onFocus={() => setActive(place)}
+                  onClick={() => setActive(place)}
+                  aria-pressed={active === place}
+                  className={`grid w-full grid-cols-[4.5rem_1fr] gap-x-4 gap-y-2 border-t border-primary-2/20 py-6 text-left transition-opacity duration-500 md:grid-cols-[7rem_16rem_1fr] md:items-baseline md:gap-x-10 ${
+                    active && active !== place ? "opacity-35" : ""
+                  }`}
+                >
+                  <span className="font-unbounded text-[10px] tracking-[0.2em] text-secondary-1">{towns[place].km} KM</span>
+                  <span className="font-aboreto text-xl tracking-[0.12em] md:text-2xl">
+                    {place.toUpperCase()}
+                    {place === "Jakarta" && <span className="block font-unbounded text-[9px] tracking-[0.24em] text-secondary-1">THE WORKROOM</span>}
+                  </span>
+                  <span className="col-start-2 font-trap leading-relaxed text-primary-2/85 md:col-start-3">{items.join(" · ")}</span>
+                </button>
               </li>
             ))}
-          </ul>
+          </ol>
+          <p className="mt-8 font-trap text-xs text-primary-2/50">Distances are straight lines to Jakarta. Map: Natural Earth.</p>
         </div>
       </section>
 
