@@ -89,22 +89,21 @@ export default function StoryHero({ headline }) {
           <h2 className="fade-in max-w-xl font-forum text-[2rem] leading-[1] md:text-6xl" style={{ animationDelay: "600ms" }}>
             {headline}
           </h2>
-          <Link
-            key={piece.slug}
-            to={piece.path}
-            className="enter pointer-events-auto group flex items-end justify-between gap-6 border-t border-primary-1/40 pt-3 md:w-[22rem]"
-          >
-            <span>
-              <span className="block font-unbounded text-[9px] tracking-[0.26em] text-secondary-1">
-                0{active + 1} / 0{products.length} · {piece.fabric.toUpperCase()}
+          <div key={piece.slug} className="enter pointer-events-auto flex flex-col items-start gap-3 md:items-end">
+            <p className="font-forum text-lg text-primary-2/90 md:text-right">
+              <span className="font-unbounded text-[9px] tracking-[0.26em] text-secondary-1">0{active + 1} / 0{products.length} </span>
+              {piece.archetype}
+            </p>
+            <Link
+              to={piece.path}
+              className="group inline-flex items-center gap-3 bg-primary-1/95 px-5 py-3 font-montserrat text-xs tracking-[0.2em] text-secondary-2 shadow-[0_8px_30px_rgba(58,58,58,0.18)] transition-colors hover:bg-primary-1"
+            >
+              {piece.title}
+              <span className="transition-transform group-hover:translate-x-1">
+                <IconArrow />
               </span>
-              <span className="mt-1 block font-aboreto text-2xl tracking-[0.1em]">{piece.title}</span>
-              <span className="block font-forum text-lg text-primary-1/85">{piece.archetype}</span>
-            </span>
-            <span className="mb-1 transition-transform group-hover:translate-x-1">
-              <IconArrow />
-            </span>
-          </Link>
+            </Link>
+          </div>
         </div>
         <h1 className="mt-4 whitespace-nowrap font-aboreto text-[19.5vw] leading-[0.8] tracking-[0.04em] md:mt-6 md:text-[20.6vw]">
           <Letters text="SAVIERA" />
