@@ -222,14 +222,14 @@ export default function Layout({ children }) {
 function FooterColumn({ title, children }) {
   return (
     <div>
-      <p className="font-unbounded text-[10px] tracking-[0.28em] text-secondary-1">{title}</p>
+      <p className="font-unbounded text-[10px] tracking-[0.28em]">{title}</p>
       <div className="mt-5 flex flex-col items-start gap-3">{children}</div>
     </div>
   );
 }
 
 function FooterLink({ to, href, children }) {
-  const className = "group inline-flex items-center font-montserrat text-sm transition-colors hover:text-accent-2";
+  const className = "group inline-flex items-center font-montserrat text-sm transition-colors hover:text-accent-1";
   const arrow = (
     <span className="opacity-0 transition-opacity group-hover:opacity-100">
       <IconArrow />

@@ -134,7 +134,7 @@ export default function Dashboard() {
 }
 
 function Field({ label, value, onChange, rows = 1 }) {
-  const shared = "mt-2 w-full border border-secondary-2/40 bg-white px-3 py-2 font-trap outline-none";
+  const shared = "mt-2 w-full border border-secondary-2/40 bg-primary-2 px-3 py-2 font-trap outline-none";
   return (
     <label className="block font-montserrat text-sm">
       {label}

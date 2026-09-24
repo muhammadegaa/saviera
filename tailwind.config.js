@@ -5,12 +5,12 @@ export default {
     extend: {
       colors: {
         "primary-1": "#EEEADF",
-        "primary-2": "#F1F1F1",
+        "primary-2": "#F6F3EC",
         "secondary-1": "#BF9553",
         "secondary-2": "#3A3A3A",
         "accent-1": "#800020",
         "accent-2": "#016064",
-        "cream-1": "#F0EADE",
+        "cream-1": "#E4DDCF",
       },
       fontFamily: {
         aboreto: ["Aboreto", "cursive"],

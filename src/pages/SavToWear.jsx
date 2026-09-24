@@ -17,9 +17,9 @@ export default function SavToWear() {
           src={{ path: "collection/linen", hd: true }}
           alt="Linen close to the body"
           eager
-          className="kenburns aspect-[4/5] w-full object-cover md:aspect-[12/5]"
+          className="kenburns warm aspect-[4/5] w-full object-cover md:aspect-[12/5]"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/45 px-6 text-center text-primary-2">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-secondary-2/55 px-6 text-center text-primary-2">
           <h1 className="font-aboreto text-4xl tracking-[0.14em] md:text-6xl">YAY! YOU HAVE MADE IT!</h1>
           <p className="mt-5 max-w-xl font-trap">
             You have intentionally chosen a small step toward your own conscious fashion staple movement through our very first collection, Archetypes.
@@ -60,7 +60,7 @@ export default function SavToWear() {
                 key={product.slug}
                 type="button"
                 onClick={() => setActive(product)}
-                className={`border px-4 py-2 font-montserrat ${active.slug === product.slug ? "border-accent-2 text-accent-2" : "border-secondary-2/40"}`}
+                className={`border px-4 py-2 font-montserrat ${active.slug === product.slug ? "border-secondary-2 bg-secondary-2 text-primary-1" : "border-secondary-2/40"}`}
               >
                 {product.name}
               </button>

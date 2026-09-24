@@ -45,7 +45,7 @@ export default function StoryHero({ headline }) {
               alt={`${product.name} in ${product.colors[0].name}`}
               sizes="(min-width: 768px) 50vw, 100vw"
               priority={index === 0}
-              className="kenburns h-full w-full object-cover object-[50%_18%]"
+              className="kenburns warm h-full w-full object-cover object-[50%_18%]"
             />
             <span
               className={`absolute left-4 top-8 hidden font-unbounded text-[9px] tracking-[0.26em] transition-opacity duration-700 md:block ${
@@ -58,7 +58,7 @@ export default function StoryHero({ headline }) {
         ))}
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-secondary-2/90 via-secondary-2/35 to-transparent" />
 
       <div className="absolute inset-x-0 top-0 flex gap-1 px-6 pt-3 md:px-12">
         {products.map((product, index) => (

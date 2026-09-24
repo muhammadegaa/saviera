@@ -44,7 +44,7 @@ export default function Archetypes() {
           src={{ path: "collection/three", hd: true }}
           alt="Wei Yi in brown, Wei Yi in taupe and Omnia, worn together"
           eager
-          className="kenburns aspect-[4/3] w-full object-cover md:aspect-[16/7]"
+          className="kenburns warm aspect-[4/3] w-full object-cover md:aspect-[16/7]"
         />
       </div>
 
@@ -96,7 +96,7 @@ export default function Archetypes() {
       </section>
 
       <section className="mx-auto grid max-w-site items-center gap-10 px-6 py-20 md:grid-cols-[1.3fr_1fr] md:px-12 md:py-32">
-        <Photo src={{ path: "collection/linen", hd: true }} alt="Linen close to the body" className="aspect-[16/10] w-full object-cover" />
+        <Photo src={{ path: "collection/linen", hd: true }} alt="Linen close to the body" className="warm aspect-[16/10] w-full object-cover" />
         <div>
           <h2 className="font-forum text-3xl md:text-4xl">A playlist to accompany your day</h2>
           <iframe

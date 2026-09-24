@@ -4,8 +4,9 @@ export const FACEBOOK_URL = "https://www.facebook.com/saviera.co";
 export const PINTEREST_URL = "https://pin.it/2p8Gsks";
 export const HEALR_INSTAGRAM_URL = "https://www.instagram.com/healr.care/";
 
-export function orderLink(product) {
-  const text = `Hi Saviera.co I would like to place an order for ${product}.\nCan you assist me?`;
+export function orderLink(product, { colour, bust } = {}) {
+  const details = [colour && `Colour: ${colour}`, bust && `Bust: ${bust} cm`].filter(Boolean);
+  const text = [`Hi Saviera.co I would like to place an order for ${product}.`, ...details, "Can you assist me?"].join("\n");
   return `https://wa.me/628175199968?text=${encodeURIComponent(text)}`;
 }
 
@@ -41,7 +42,7 @@ export const products = [
     makerPhoto: { src: "makers/taswan", alt: "Pak Taswan at his sewing machine" },
     summary:
       "A loungewear, casual outer, or a sexy summer dress with plunge deep V-neck with above-the-waist concealed elastic to give shape.",
-    colors: [{ name: "Off-white", hex: "#F3EEE4", photos: [hd("omnia/off-white-1"), hd("omnia/off-white-2"), "omnia/off-white-3", "omnia/off-white-4", "omnia/off-white-5", "omnia/off-white-7"] }],
+    colors: [{ name: "Off-white", hex: "#E9E7E1", photos: [hd("omnia/off-white-1"), hd("omnia/off-white-2"), "omnia/off-white-3", "omnia/off-white-4", "omnia/off-white-5", "omnia/off-white-7"] }],
     size: [
       "All size, Standard Fit",
       "Midi length 101 cm",
@@ -84,9 +85,9 @@ export const products = [
     summary:
       "A relaxed, elegant, and fitting double-breasted blazer in asymmetrical cutting. Buttons inside, aiming for a sculptural look. This piece comes in three color selections: Mauve, Taupe, and Brown.",
     colors: [
-      { name: "Mauve", hex: "#D9C9BF", photos: [hd("wei-yi/mauve-1"), hd("wei-yi/mauve-2"), hd("wei-yi/mauve-3"), "wei-yi/mauve-4"] },
-      { name: "Taupe", hex: "#B7AA98", photos: ["wei-yi/taupe-1"] },
-      { name: "Brown", hex: "#8A5530", photos: [hd("wei-yi/brown-1"), hd("wei-yi/brown-2"), hd("wei-yi/brown-3"), hd("wei-yi/brown-4")] },
+      { name: "Mauve", hex: "#C4B8B1", photos: [hd("wei-yi/mauve-1"), hd("wei-yi/mauve-2"), hd("wei-yi/mauve-3"), "wei-yi/mauve-4"] },
+      { name: "Taupe", hex: "#B09C86", photos: ["wei-yi/taupe-1"] },
+      { name: "Brown", hex: "#6B3F28", photos: [hd("wei-yi/brown-1"), hd("wei-yi/brown-2"), hd("wei-yi/brown-3"), hd("wei-yi/brown-4")] },
     ],
     size: [
       "All size, Loose-Fit",
@@ -134,8 +135,8 @@ export const products = [
     summary:
       "Wrap top that lasts beyond the season. Belt included (sewed in the back). Tailored details and material make this item a top-notch statement piece to wear. Tailored by artisans with a unique material hand.",
     colors: [
-      { name: "Charcoal", hex: "#2E2E30", photos: [hd("cyanne/charcoal-1"), hd("cyanne/charcoal-2"), hd("cyanne/charcoal-3"), "cyanne/charcoal-4"] },
-      { name: "Porcelain", hex: "#EFEDE8", photos: [hd("cyanne/porcelain-1"), hd("cyanne/porcelain-2"), hd("cyanne/porcelain-3"), "cyanne/porcelain-4"] },
+      { name: "Charcoal", hex: "#232326", photos: [hd("cyanne/charcoal-1"), hd("cyanne/charcoal-2"), hd("cyanne/charcoal-3"), "cyanne/charcoal-4"] },
+      { name: "Porcelain", hex: "#E4E3DE", photos: [hd("cyanne/porcelain-1"), hd("cyanne/porcelain-2"), hd("cyanne/porcelain-3"), "cyanne/porcelain-4"] },
     ],
     size: [
       "All sizes, Loose-Fit to Semi-Oversized",

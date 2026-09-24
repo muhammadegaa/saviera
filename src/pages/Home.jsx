@@ -11,13 +11,14 @@ const worn = [
   "DOXHT1REuG8", "C3Ux-IEPKes", "C3On39HPdvC", "DAgNhqozyj8", "CrsTwL7vG1T", "Cu6SCsABDjv",
 ];
 const wornOrder = [5, 10, 6, 9, 8, 12, 7, 1, 11, 2, 3, 4];
+import { readBust, saveBust } from "../lib/bust";
 import { useContent } from "../lib/useContent";
 
 export default function Home() {
   const { content } = useContent();
   const home = content.homepage;
   const [selected, setSelected] = useState(products[0].slug);
-  const [bust, setBust] = useState(null);
+  const [bust, setBust] = useState(readBust);
   const [view, setView] = useState("studio");
   const piece = products.find((product) => product.slug === selected);
   const [main, ...others] = piece.colors;
@@ -42,7 +43,7 @@ export default function Home() {
         </Reveal>
         <Reveal delay={150} className="mt-10 md:ml-[50%] md:mt-16">
           <p className="max-w-md font-trap leading-relaxed">{home.story}</p>
-          <Link to="/about-us" className="mt-6 inline-flex items-center font-montserrat text-xs font-medium tracking-[0.22em] text-accent-2">
+          <Link to="/about-us" className="mt-6 inline-flex items-center border-b border-secondary-1 pb-1 font-montserrat text-xs font-medium tracking-[0.22em] transition-colors hover:text-accent-1">
             {home.cta} <IconArrow />
           </Link>
         </Reveal>
@@ -64,7 +65,10 @@ export default function Home() {
                 min="70"
                 max="140"
                 value={bust ?? 96}
-                onChange={(event) => setBust(Number(event.target.value))}
+                onChange={(event) => {
+                  setBust(Number(event.target.value));
+                  saveBust(event.target.value);
+                }}
                 className="fit-range mt-4 h-11 w-full cursor-pointer bg-transparent"
               />
               <p className="mt-1 font-trap text-xs text-secondary-2/70">
@@ -162,7 +166,7 @@ export default function Home() {
             </p>
             <div className="grid gap-8 px-6 pb-10 pt-6 md:grid-cols-2 md:px-12 md:pb-12">
               <div>
-                <p className="font-unbounded text-[10px] tracking-[0.24em] text-secondary-1">{piece.fabric.toUpperCase()}</p>
+                <p className="font-unbounded text-[10px] tracking-[0.24em]">{piece.fabric.toUpperCase()}</p>
                 <dl className="mt-4 font-trap text-sm">
                   {piece.fit.map(([label, value]) => (
                     <div key={label} className="flex justify-between gap-4 border-b border-secondary-1/40 py-2">
@@ -192,7 +196,7 @@ export default function Home() {
                   SEE {piece.title} <IconArrow />
                 </Link>
                 <a
-                  href={orderLink(piece.name)}
+                  href={orderLink(piece.name, { bust })}
                   target="_blank"
                   rel="noreferrer"
                   className="flex flex-1 items-center justify-center border border-accent-2 py-4 font-montserrat text-xs font-medium tracking-[0.22em] text-accent-2"
@@ -242,7 +246,7 @@ export default function Home() {
             <p className="font-unbounded text-[10px] tracking-[0.32em]">#SAVTOWEAR</p>
             <h2 className="mt-3 font-forum text-4xl md:text-6xl">Worn, then told.</h2>
           </div>
-          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="font-montserrat text-xs tracking-[0.2em] text-accent-2">
+          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="border-b border-secondary-1 pb-1 font-montserrat text-xs tracking-[0.2em] transition-colors hover:text-accent-1">
             @saviera.co
           </a>
         </div>
@@ -294,7 +298,7 @@ export default function Home() {
           <div className="mt-12 grid grid-cols-[7rem_1fr] items-start gap-5 md:grid-cols-[9rem_1fr]">
             <Photo src="packaging/thank-you" alt="Hand-painted thank-you cards that come with each order" className="aspect-square w-full object-cover" />
             <div>
-            <p className="font-unbounded text-[10px] tracking-[0.28em] text-secondary-1">AFTER IT ARRIVES</p>
+            <p className="font-unbounded text-[10px] tracking-[0.28em]">AFTER IT ARRIVES</p>
             <p className="mt-3 font-forum text-2xl">{home.promoTitle}</p>
             <p className="mt-2 max-w-md font-trap text-sm leading-relaxed">{home.promoBody}</p>
             </div>

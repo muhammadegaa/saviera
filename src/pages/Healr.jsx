@@ -9,7 +9,7 @@ const beliefs = [
   "Etika dan keamanan data selalu jadi prioritas kami dalam proses ini.",
 ];
 
-const link = "underline decoration-secondary-1 underline-offset-4 transition-colors hover:text-accent-2";
+const link = "underline decoration-secondary-1 underline-offset-4 transition-colors hover:text-secondary-1";
 
 export default function Healr() {
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function Healr() {
           {beliefs.map((belief, index) => (
             <Reveal key={belief}>
               <li className="grid gap-3 border-t border-secondary-1 py-8 md:grid-cols-[6rem_1fr]">
-                <span className="font-unbounded text-[10px] tracking-[0.24em] text-secondary-1">0{index + 1}</span>
+                <span className="font-unbounded text-[10px] tracking-[0.24em]">0{index + 1}</span>
                 <p className="max-w-3xl font-forum text-2xl leading-snug md:text-3xl">{belief}</p>
               </li>
             </Reveal>

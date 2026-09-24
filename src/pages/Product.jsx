@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import Photo from "../components/Photo";
 import { Letters } from "../components/Reveal";
 import { IconArrow } from "../components/Icons";
-import { INSTAGRAM_URL, SHOPEE_URL, findProduct, orderLink, products } from "../data/products";
+import { INSTAGRAM_URL, SHOPEE_URL, findProduct, fitFor, orderLink, products } from "../data/products";
+import { readBust } from "../lib/bust";
 
 const sections = [
   ["size", "Size & fit"],
@@ -18,6 +19,8 @@ export default function Product({ slug }) {
   const [color, setColor] = useState(product.colors[0]);
   const [open, setOpen] = useState("size");
   const [ctaVisible, setCtaVisible] = useState(true);
+  const [bust] = useState(readBust);
+  const order = orderLink(product.name, { colour: color.name, bust });
   const cta = useRef(null);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export default function Product({ slug }) {
                 alt={`${product.name} in ${color.name}, view ${photoIndex + 1}`}
                 sizes="(min-width: 768px) 52vw, 86vw"
                 eager={photoIndex === 0}
-                className="aspect-[3/4] w-[86vw] shrink-0 snap-start bg-[#dcdcdc] object-cover object-[50%_20%] md:w-full"
+                className="aspect-[3/4] w-[86vw] shrink-0 snap-start bg-cream-1 object-cover object-[50%_20%] md:w-full"
               />
             ))}
           </div>
@@ -91,7 +94,7 @@ export default function Product({ slug }) {
           </div>
 
           <div className="mt-8">
-            <p className="font-unbounded text-[10px] tracking-[0.24em] text-secondary-1">
+            <p className="font-unbounded text-[10px] tracking-[0.24em]">
               FREE SIZE · {product.fabric.toUpperCase()}
             </p>
             <dl className="mt-3 font-trap text-sm">
@@ -102,11 +105,16 @@ export default function Product({ slug }) {
                 </div>
               ))}
             </dl>
+            {bust && (
+              <p className="mt-3 font-forum text-lg">
+                At your {bust} cm bust: <span className="text-accent-1">{fitFor(product, bust)}</span>
+              </p>
+            )}
           </div>
 
           <a
             ref={cta}
-            href={orderLink(product.name)}
+            href={order}
             target="_blank"
             rel="noreferrer"
             className="mt-8 flex w-full items-center justify-center bg-accent-2 py-4 font-montserrat text-sm font-medium tracking-[0.2em] text-primary-2 transition-opacity hover:opacity-90"
@@ -223,7 +231,7 @@ export default function Product({ slug }) {
           </p>
         </div>
         <a
-          href={orderLink(product.name)}
+          href={order}
           target="_blank"
           rel="noreferrer"
           tabIndex={ctaVisible ? -1 : 0}

@@ -39,7 +39,7 @@ export default function About() {
       </section>
 
       <div className="overflow-hidden">
-        <Photo src={{ path: "about/cloth", hd: true }} alt="Dark linen falling from a shoulder" eager className="kenburns aspect-[16/9] w-full object-cover md:aspect-[12/5]" />
+        <Photo src={{ path: "about/cloth", hd: true }} alt="Dark linen falling from a shoulder" eager className="kenburns warm aspect-[16/9] w-full object-cover md:aspect-[12/5]" />
       </div>
 
       <section className="mx-auto max-w-site px-6 py-20 md:px-12 md:py-32">
@@ -50,7 +50,7 @@ export default function About() {
 
       <section className="bg-secondary-2 text-primary-2">
         <div className="mx-auto grid max-w-site md:grid-cols-2">
-          <Photo src="about/hanging" alt="Garments drying on a line against a stone wall" className="aspect-square w-full object-cover md:aspect-auto md:h-full" />
+          <Photo src="about/hanging" alt="Garments drying on a line against a stone wall" className="warm aspect-square w-full object-cover md:aspect-auto md:h-full" />
           <Reveal from="translate-x-10" className="px-6 py-16 md:px-14 md:py-24">
             <h2 className="font-aboreto text-3xl tracking-[0.08em] md:text-4xl">{about.statusTitle}</h2>
             {about.status.map((paragraph) => (
@@ -70,10 +70,10 @@ export default function About() {
             <Reveal key={key}>
               <div className="grid gap-6 border-t border-secondary-1 py-10 md:grid-cols-[1fr_1.1fr_1.6fr] md:gap-12 md:py-14">
                 <div>
-                  <p className="font-unbounded text-[10px] tracking-[0.24em] text-secondary-1">0{index + 1}</p>
+                  <p className="font-unbounded text-[10px] tracking-[0.24em]">0{index + 1}</p>
                   <h3 className="mt-2 font-aboreto text-3xl tracking-[0.08em] md:text-4xl">{title}</h3>
                 </div>
-                <Photo src={image} alt={alt} className="aspect-[3/2] w-full object-cover" />
+                <Photo src={image} alt={alt} className="warm aspect-[3/2] w-full object-cover" />
                 <ul className="space-y-4 font-trap leading-relaxed">
                   {about[key].map((item) => (
                     <li key={item.slice(0, 32)} className="border-l border-secondary-1 pl-4">
