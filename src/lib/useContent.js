@@ -11,9 +11,13 @@ export function useContent() {
     api
       .get("/api/content")
       .then((response) => {
-        if (active) {
+        if (!active) return;
+        // On Vercel the SPA rewrite answers /api/content with index.html, so check the shape.
+        if (response.data?.homepage && response.data?.about) {
           setContent(response.data);
           setStatus("ready");
+        } else {
+          setStatus("fallback");
         }
       })
       .catch(() => {
