@@ -147,3 +147,13 @@ input[type="range"].fit-range::-moz-range-thumb {
 .warm {
   filter: sepia(0.14) saturate(0.9);
 }
+
+@layer components {
+  .btn-primary {
+    @apply flex items-center justify-center bg-secondary-2 font-montserrat text-xs font-medium tracking-[0.22em] text-primary-2 transition-colors hover:bg-accent-1;
+  }
+
+  .btn-secondary {
+    @apply flex items-center justify-center border border-secondary-2 font-montserrat text-xs tracking-[0.22em] text-secondary-2 transition-colors hover:bg-secondary-2 hover:text-primary-2;
+  }
+}

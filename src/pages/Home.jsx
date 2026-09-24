@@ -189,20 +189,12 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row md:col-span-2">
-                <Link
-                  to={piece.path}
-                  className="flex flex-1 items-center justify-center bg-accent-2 py-4 font-montserrat text-xs font-medium tracking-[0.22em] text-primary-2"
-                >
-                  SEE {piece.title} <IconArrow />
-                </Link>
-                <a
-                  href={orderLink(piece.name, { bust })}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex flex-1 items-center justify-center border border-accent-2 py-4 font-montserrat text-xs font-medium tracking-[0.22em] text-accent-2"
-                >
+                <a href={orderLink(piece.name, { bust })} target="_blank" rel="noreferrer" className="btn-primary flex-1 py-4">
                   OWN THIS ITEM
                 </a>
+                <Link to={piece.path} className="btn-secondary flex-1 py-4">
+                  SEE {piece.title} <IconArrow />
+                </Link>
               </div>
             </div>
           </div>

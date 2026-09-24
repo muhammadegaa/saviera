@@ -69,7 +69,7 @@ export default function Archetypes() {
               <p className="mt-5 font-montserrat text-xs tracking-[0.16em]">
                 {product.colors.map((color) => color.name.toUpperCase()).join(" · ")}
               </p>
-              <Link to={product.path} className="mt-8 inline-flex items-center bg-accent-2 px-8 py-4 font-montserrat text-xs font-medium tracking-[0.22em] text-primary-2">
+              <Link to={product.path} className="btn-secondary mt-8 inline-flex px-8 py-4">
                 SEE {product.title} <IconArrow />
               </Link>
             </Reveal>

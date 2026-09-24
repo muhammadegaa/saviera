@@ -117,15 +117,15 @@ export default function Product({ slug }) {
             href={order}
             target="_blank"
             rel="noreferrer"
-            className="mt-8 flex w-full items-center justify-center bg-accent-2 py-4 font-montserrat text-sm font-medium tracking-[0.2em] text-primary-2 transition-opacity hover:opacity-90"
+            className="btn-primary mt-8 w-full py-4 text-sm"
           >
             OWN THIS ITEM
           </a>
           <div className="mt-3 grid grid-cols-2 gap-3">
-            <a href={SHOPEE_URL} target="_blank" rel="noreferrer" className="flex items-center justify-center border border-accent-2 py-3 font-montserrat text-xs tracking-[0.2em] text-accent-2">
+            <a href={SHOPEE_URL} target="_blank" rel="noreferrer" className="btn-secondary py-3">
               SHOPEE
             </a>
-            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="flex items-center justify-center border border-accent-2 py-3 font-montserrat text-xs tracking-[0.2em] text-accent-2">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="btn-secondary py-3">
               INSTAGRAM DM
             </a>
           </div>
@@ -235,7 +235,7 @@ export default function Product({ slug }) {
           target="_blank"
           rel="noreferrer"
           tabIndex={ctaVisible ? -1 : 0}
-          className="shrink-0 bg-accent-2 px-5 py-3 font-montserrat text-xs font-medium tracking-[0.18em] text-primary-2"
+          className="btn-primary shrink-0 px-5 py-3"
         >
           OWN THIS ITEM
         </a>
