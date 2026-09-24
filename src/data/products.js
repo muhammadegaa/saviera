@@ -33,6 +33,10 @@ export const products = [
     fit: [["Bust", "up to 115 cm"], ["Length", "101 cm, midi"], ["Under bust", "elastic, to 120 cm"]],
     weekday: "Open, as an outer over a plain top and trousers.",
     weekend: "Closed, as a summer dress with a slip underneath.",
+    bustMax: 115,
+    fitWithin: "Fits, open or closed.",
+    fitOver: "Wear it open, as an outer.",
+    worn: [["worn/9", "C3On39HPdvC"], ["worn/10", "DAgNhqozyj8"]],
     makerName: "Pak Taswan",
     makerPhoto: { src: "makers/taswan", alt: "Pak Taswan at his sewing machine" },
     summary:
@@ -71,6 +75,10 @@ export const products = [
     fit: [["Bust", "up to 114 cm buttoned, free open"], ["Length", "60.5 cm"], ["Sleeve", "25.5 cm"]],
     weekday: "Buttoned, over a white tee, into the meeting.",
     weekend: "Open, over a slip dress or a tank.",
+    bustMax: 114,
+    fitWithin: "Fits buttoned.",
+    fitOver: "Fits worn open.",
+    worn: [["worn/6", "C6nJXI6PZ3S"]],
     makerName: "Pak Darto",
     makerPhoto: { src: "makers/darto", alt: "Pak Darto in the workshop" },
     summary:
@@ -117,6 +125,10 @@ export const products = [
     fit: [["Bust", "120 cm tied, free loose"], ["Length", "77.5 cm"], ["Sleeve", "65.5 cm"]],
     weekday: "Tied close and tucked into tailored trousers.",
     weekend: "Left loose over a tank, belt hanging.",
+    bustMax: 120,
+    fitWithin: "Fits with the belt tied.",
+    fitOver: "Fits worn loose, belt hanging.",
+    worn: [["worn/8", "C3Ux-IEPKes"], ["worn/7", "DOXHT1REuG8"]],
     makerName: "Pak Tata",
     makerPhoto: { src: "makers/cutting", alt: "Cotton being cut by hand on the workshop table" },
     summary:
@@ -147,6 +159,10 @@ export const products = [
       "Between calm and heat, order and a little chaos. Cyanne is the wrap that can be tied close or left to fall. An outside cut with an inside logic. Not a focal point to chase — a piece to add to the day you already have.",
   },
 ];
+
+export function fitFor(product, bust) {
+  return bust <= product.bustMax ? product.fitWithin : product.fitOver;
+}
 
 export function findProduct(slug) {
   return products.find((product) => product.slug === slug);

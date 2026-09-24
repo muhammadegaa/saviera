@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Photo from "../components/Photo";
 import { Letters } from "../components/Reveal";
@@ -17,6 +17,14 @@ export default function Product({ slug }) {
   const next = products[(index + 1) % products.length];
   const [color, setColor] = useState(product.colors[0]);
   const [open, setOpen] = useState("size");
+  const [ctaVisible, setCtaVisible] = useState(true);
+  const cta = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => setCtaVisible(entry.isIntersecting || entry.boundingClientRect.top > 0));
+    observer.observe(cta.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     document.title = `${product.name} | Vol 1. Archetypes - Saviera`;
@@ -29,17 +37,22 @@ export default function Product({ slug }) {
   return (
     <article>
       <div className="mx-auto grid max-w-site md:grid-cols-[1.15fr_1fr]">
-        <div key={color.name} className="fade-in flex snap-x snap-mandatory gap-1 overflow-x-auto md:flex-col md:overflow-visible">
-          {color.photos.map((photo, photoIndex) => (
-            <Photo
-              key={typeof photo === "string" ? photo : photo.path}
-              src={photo}
-              alt={`${product.name} in ${color.name}, view ${photoIndex + 1}`}
-              sizes="(min-width: 768px) 52vw, 86vw"
-              eager={photoIndex === 0}
-              className="aspect-[3/4] w-[86vw] shrink-0 snap-start bg-[#dcdcdc] object-cover object-[50%_20%] md:w-full"
-            />
-          ))}
+        <div className="relative min-w-0">
+          <span className="pointer-events-none absolute bottom-3 right-3 z-10 bg-primary-1/90 px-2 py-1 font-unbounded text-[9px] tracking-[0.2em] md:hidden">
+            {color.photos.length} PHOTOS · SWIPE
+          </span>
+          <div key={color.name} className="fade-in flex snap-x snap-mandatory gap-1 overflow-x-auto md:flex-col md:overflow-visible">
+            {color.photos.map((photo, photoIndex) => (
+              <Photo
+                key={typeof photo === "string" ? photo : photo.path}
+                src={photo}
+                alt={`${product.name} in ${color.name}, view ${photoIndex + 1}`}
+                sizes="(min-width: 768px) 52vw, 86vw"
+                eager={photoIndex === 0}
+                className="aspect-[3/4] w-[86vw] shrink-0 snap-start bg-[#dcdcdc] object-cover object-[50%_20%] md:w-full"
+              />
+            ))}
+          </div>
         </div>
 
         <div className="px-6 pb-16 pt-8 md:sticky md:top-[100px] md:self-start md:px-12 md:pt-12">
@@ -67,7 +80,7 @@ export default function Product({ slug }) {
                   onClick={() => setColor(swatch)}
                   aria-label={swatch.name}
                   aria-pressed={color.name === swatch.name}
-                  className={`h-9 w-9 rounded-full border p-[3px] transition-colors ${
+                  className={`h-11 w-11 rounded-full border p-1 transition-colors ${
                     color.name === swatch.name ? "border-secondary-2" : "border-transparent"
                   }`}
                 >
@@ -92,6 +105,7 @@ export default function Product({ slug }) {
           </div>
 
           <a
+            ref={cta}
             href={orderLink(product.name)}
             target="_blank"
             rel="noreferrer"
@@ -149,6 +163,21 @@ export default function Product({ slug }) {
         </div>
       </div>
 
+      <section className="mx-auto max-w-site px-6 py-20 md:px-12 md:py-28">
+        <div className="flex items-end justify-between">
+          <h2 className="font-forum text-4xl md:text-6xl">Worn by you</h2>
+          <p className="font-unbounded text-[10px] tracking-[0.28em]">#SAVTOWEAR</p>
+        </div>
+        <div className="mt-8 grid grid-cols-2 gap-2 md:grid-cols-4">
+          {product.worn.map(([src, post]) => (
+            <a key={post} href={`https://www.instagram.com/p/${post}`} target="_blank" rel="noreferrer" className="group overflow-hidden">
+              <Photo src={src} alt={`A customer wearing ${product.name}, from Instagram`} className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            </a>
+          ))}
+        </div>
+        <p className="mt-4 font-trap text-sm">Post yours with #SAVTOWEAR and tag @saviera.co. We will contact you about a 20k IDR cashback.</p>
+      </section>
+
       <section className="bg-secondary-2 px-6 py-20 text-primary-2 md:px-12 md:py-32">
         <div className="mx-auto grid max-w-site items-center gap-10 md:grid-cols-[1fr_1.3fr] md:gap-20">
           <Photo src={product.makerPhoto.src} alt={product.makerPhoto.alt} className="aspect-[4/3] w-full object-cover grayscale" />
@@ -180,6 +209,29 @@ export default function Product({ slug }) {
           <Photo src={next.colors[0].photos[0]} alt="" sizes="160px" className="aspect-[3/4] w-24 object-cover md:w-40" />
         </div>
       </Link>
+
+      <div
+        className={`fixed inset-x-0 bottom-0 z-50 flex items-center gap-4 border-t border-secondary-1/60 bg-primary-1/95 px-4 py-3 backdrop-blur transition-transform duration-500 md:hidden ${
+          ctaVisible ? "translate-y-full" : "translate-y-0"
+        }`}
+        aria-hidden={ctaVisible}
+      >
+        <div className="min-w-0 flex-1">
+          <p className="font-aboreto text-lg leading-none tracking-[0.08em]">{product.title}</p>
+          <p className="mt-1 truncate font-trap text-xs">
+            {color.name} · free size · {product.fabric.toLowerCase()}
+          </p>
+        </div>
+        <a
+          href={orderLink(product.name)}
+          target="_blank"
+          rel="noreferrer"
+          tabIndex={ctaVisible ? -1 : 0}
+          className="shrink-0 bg-accent-2 px-5 py-3 font-montserrat text-xs font-medium tracking-[0.18em] text-primary-2"
+        >
+          OWN THIS ITEM
+        </a>
+      </div>
     </article>
   );
 }

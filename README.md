@@ -1,6 +1,6 @@
 # Saviera
 
-Local recreation of the public Saviera slow-fashion site. Campaign photography and the brand mark are original placeholders (labeled on each frame). Body type uses Outfit as a stand-in for the commercial Trap face. The UI name stays **Saviera**.
+Local recreation of the public Saviera slow-fashion site. Photography and the SA monogram come from saviera.co, converted to WebP under `public/img/` (`-800` and, for large originals, `-1600` widths). Body type uses Outfit as a stand-in for the commercial Trap face. The UI name stays **Saviera**.
 
 Orders stay on WhatsApp and Shopee. Nothing here calls the production database.
 

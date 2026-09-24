@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Photo from "../components/Photo";
-import Reveal, { Letters } from "../components/Reveal";
+import Reveal from "../components/Reveal";
+import StoryHero from "../components/StoryHero";
 import { IconArrow } from "../components/Icons";
-import { INSTAGRAM_URL, SHOPEE_URL, orderLink, products } from "../data/products";
+import { INSTAGRAM_URL, SHOPEE_URL, fitFor, orderLink, products } from "../data/products";
 
 const worn = [
   "DO-aPzSCJb3", "Curc5vcvyeC", "CtAqPB_vRZq", "Ct1I7OePdYM", "C59_ErIvJhJ", "C6nJXI6PZ3S",
@@ -16,6 +17,8 @@ export default function Home() {
   const { content } = useContent();
   const home = content.homepage;
   const [selected, setSelected] = useState(products[0].slug);
+  const [bust, setBust] = useState(null);
+  const [view, setView] = useState("studio");
   const piece = products.find((product) => product.slug === selected);
   const [main, ...others] = piece.colors;
   const side = [
@@ -27,62 +30,9 @@ export default function Home() {
     document.title = "Slow Fashion & Eco-Conscious Modern Staple | Saviera";
   }, []);
 
-  function choose(slug) {
-    setSelected(slug);
-    document.getElementById("savieraProduct")?.scrollIntoView({ behavior: "smooth" });
-  }
-
   return (
     <>
-      <section className="flex min-h-[calc(100svh-5rem)] flex-col px-6 pb-8 pt-4 md:min-h-[calc(100svh-100px)] md:px-12 md:pb-12">
-        <p className="flex justify-between font-unbounded text-[10px] tracking-[0.32em]">
-          <span>VOL 01 · ARCHETYPES</span>
-          <span className="hidden md:inline">THREE PIECES · ONE SIZE · MADE IN INDONESIA</span>
-        </p>
-        <h1 className="mt-6 whitespace-nowrap font-aboreto text-[18vw] leading-[0.9] tracking-[0.08em] md:mt-4 md:text-[17.4vw]">
-          <Letters text="SAVIERA" />
-        </h1>
-
-        <div className="mt-auto grid items-end gap-10 pt-8 md:grid-cols-[1fr_1.25fr] md:gap-16">
-          <div className="fade-in" style={{ animationDelay: "700ms" }}>
-            <h2 className="max-w-xl font-forum text-[2.4rem] leading-[1] md:text-7xl">{home.headline}</h2>
-            <p className="mt-5 max-w-sm font-trap text-sm leading-relaxed md:text-base">
-              Free size. Linen and cotton. Sewn in small batches in Jakarta, for the meeting and the weekend.
-            </p>
-            <a
-              href="#savieraProduct"
-              className="mt-6 hidden items-center font-montserrat text-xs font-medium tracking-[0.22em] text-accent-2 md:inline-flex"
-            >
-              FIND YOURS <IconArrow />
-            </a>
-          </div>
-
-          <div aria-label="The three pieces of Vol 01" className="grid grid-cols-3 gap-2 md:gap-4">
-            {products.map((product, index) => (
-              <button
-                key={product.slug}
-                type="button"
-                onClick={() => choose(product.slug)}
-                className="fade-in group text-left"
-                style={{ animationDelay: `${900 + index * 200}ms` }}
-              >
-                <span className="block overflow-hidden bg-[#dcdcdc]">
-                  <Photo
-                    src={product.colors[0].photos[0]}
-                    alt={`${product.name} in ${product.colors[0].name}`}
-                    sizes="(min-width: 768px) 18vw, 32vw"
-                    eager
-                    className="kenburns aspect-[9/16] h-auto w-full object-cover object-top md:aspect-[3/4] transition-transform duration-700 group-hover:scale-[1.04]"
-                  />
-                </span>
-                <span className="mt-2 block font-unbounded text-[9px] tracking-[0.24em] transition-colors group-hover:text-accent-1">
-                  0{index + 1} {product.title}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      <StoryHero headline={home.headline} />
 
       <section className="mx-auto max-w-site px-6 py-24 md:px-12 md:py-44">
         <Reveal>
@@ -103,7 +53,25 @@ export default function Home() {
           <div className="px-6 pb-8 pt-16 md:sticky md:top-[100px] md:self-start md:px-12 md:py-20">
             <p className="font-unbounded text-[10px] tracking-[0.32em]">SHOP · VOL 01</p>
             <h2 className="mt-4 font-forum text-4xl leading-tight md:text-6xl">Three pieces. Which one is yours?</h2>
-            <ul className="mt-10 md:mt-16">
+            <div className="mt-8 md:mt-10">
+              <label htmlFor="bust" className="flex items-baseline justify-between font-montserrat text-xs tracking-[0.16em]">
+                <span>YOUR BUST, IN CM</span>
+                <span className="font-unbounded text-2xl tracking-normal text-accent-1">{bust ?? "—"}</span>
+              </label>
+              <input
+                id="bust"
+                type="range"
+                min="70"
+                max="140"
+                value={bust ?? 96}
+                onChange={(event) => setBust(Number(event.target.value))}
+                className="fit-range mt-4 h-11 w-full cursor-pointer bg-transparent"
+              />
+              <p className="mt-1 font-trap text-xs text-secondary-2/70">
+                {bust ? "Every piece is free size. Here is how each one sits on you." : "Slide to see how each free-size piece sits on you."}
+              </p>
+            </div>
+            <ul className="mt-8 md:mt-10">
               {products.map((product, index) => {
                 const active = product.slug === selected;
                 return (
@@ -124,7 +92,7 @@ export default function Home() {
                           {product.title}
                         </span>
                         <span className={`mt-1 block font-forum text-lg transition-opacity duration-500 md:text-xl ${active ? "" : "opacity-50"}`}>
-                          {product.archetype}
+                          {bust ? fitFor(product, bust) : product.archetype}
                         </span>
                       </span>
                     </button>
@@ -135,6 +103,38 @@ export default function Home() {
           </div>
 
           <div key={piece.slug} className="enter md:border-l md:border-secondary-1/60">
+            <div className="flex font-montserrat text-[11px] tracking-[0.18em]">
+              {[
+                ["studio", "IN THE STUDIO"],
+                ["worn", `WORN BY YOU · ${piece.worn.length}`],
+              ].map(([key, label]) => (
+                <button
+                  key={key}
+                  type="button"
+                  aria-pressed={view === key}
+                  onClick={() => setView(key)}
+                  className={`flex-1 py-4 transition-colors ${view === key ? "bg-secondary-2 text-primary-1" : "border-b border-secondary-1/60"}`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            {view === "worn" ? (
+              <div className="fade-in grid aspect-[5/4] grid-cols-2 gap-1 md:aspect-[4/3]">
+                {piece.worn.map(([src, post]) => (
+                  <a
+                    key={post}
+                    href={`https://www.instagram.com/p/${post}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`group relative min-h-0 overflow-hidden ${piece.worn.length === 1 ? "col-span-2" : ""}`}
+                  >
+                    <Photo src={src} alt={`A customer wearing ${piece.name}, from Instagram`} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <span className="absolute bottom-3 left-3 bg-primary-1/90 px-2 py-1 font-unbounded text-[8px] tracking-[0.22em]">#SAVTOWEAR</span>
+                  </a>
+                ))}
+              </div>
+            ) : (
             <div className="grid aspect-[5/4] grid-cols-[3fr_2fr] gap-1 md:aspect-[4/3]">
               <div className="min-h-0 overflow-hidden">
                 <Photo
@@ -156,6 +156,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            )}
             <p className="px-6 pt-4 font-unbounded text-[9px] tracking-[0.22em] md:px-12">
               {piece.colors.map((color) => color.name.toUpperCase()).join(" · ")}
             </p>
