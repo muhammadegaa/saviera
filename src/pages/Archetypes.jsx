@@ -35,7 +35,7 @@ export default function Archetypes() {
     <article className="bg-primary-1">
       <header className="mx-auto max-w-3xl px-6 pb-10 pt-8 text-center">
         <p className="font-unbounded text-[11px] tracking-[0.28em]">VOL 01</p>
-        <h1 className="mt-3 font-aboreto text-4xl tracking-[0.12em] md:text-6xl">ARCHETYPES</h1>
+        <h1 className="mt-3 font-aboreto text-5xl tracking-[0.14em] md:text-8xl">ARCHETYPES</h1>
         <p className="mt-7 font-trap text-secondary-2">
           Like an Opera with an Overture, Archetypes mark the commencement of our{" "}
           <strong>limited initial collection.</strong>

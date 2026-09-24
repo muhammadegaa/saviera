@@ -16,8 +16,39 @@ body {
   color: #f1f1f1;
 }
 
+@keyframes drift {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.kenburns {
+  animation: drift 14s ease-out forwards;
+}
+
+.ticker-track {
+  animation: ticker 36s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .kenburns,
+  .ticker-track {
+    animation: none;
   }
 }

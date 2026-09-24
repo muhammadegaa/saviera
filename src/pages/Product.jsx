@@ -38,8 +38,8 @@ export default function Product({ slug }) {
         <p className="font-unbounded text-[11px] tracking-[0.22em]">
           <Link to="/01-archetypes">VOL 01. ARCHETYPES</Link>
         </p>
-        <h1 className="mt-3 font-aboreto text-5xl md:text-6xl">{product.title}</h1>
-        <p className="mt-5 font-trap leading-relaxed">{product.summary}</p>
+        <h1 className="mt-3 font-aboreto text-6xl tracking-[0.08em] md:text-8xl">{product.title}</h1>
+        <p className="mt-6 max-w-md font-forum text-2xl leading-snug">{product.summary}</p>
         <p className="mt-6 font-montserrat text-sm">Available colors:</p>
         <div className="mt-3 flex flex-wrap gap-3">
           {product.colors.map((swatch) => (

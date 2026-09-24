@@ -2,58 +2,74 @@ import { useEffect, useState } from "react";
 import Placeholder from "./Placeholder";
 
 const slides = [
-  { tone: "sand", label: "Hero slide 1 placeholder" },
-  { tone: "ink", label: "Hero slide 2 placeholder" },
-  { tone: "clay", label: "Hero slide 3 placeholder" },
+  { tone: "sand", mobile: "sand", label: "Hero slide 1 placeholder", index: "01" },
+  { tone: "ink", mobile: "brown", label: "Hero slide 2 placeholder", index: "02" },
+  { tone: "clay", mobile: "clay", label: "Hero slide 3 placeholder", index: "03" },
 ];
 
-export default function HeroSlider() {
+export default function HeroSlider({ children }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
-    const timer = setInterval(() => setIndex((current) => (current + 1) % slides.length), 6000);
+    const timer = setInterval(() => setIndex((current) => (current + 1) % slides.length), 7000);
     return () => clearInterval(timer);
   }, []);
 
   const go = (direction) => setIndex((current) => (current + direction + slides.length) % slides.length);
 
   return (
-    <section className="relative -mt-20 md:-mt-[100px]" aria-roledescription="carousel" aria-label="Homepage hero">
-      <div className="relative">
-        {slides.map((slide, slideIndex) => (
-          <div
-            key={slide.label}
-            className={`transition-opacity duration-1000 ease-in-out ${
-              slideIndex === index ? "relative opacity-100" : "absolute inset-0 opacity-0"
-            }`}
-          >
-            <Placeholder tone={slide.tone} label={`${slide.label}, desktop`} className="hidden aspect-[16/7] w-full md:block" />
-            <Placeholder tone={slideIndex === 1 ? "brown" : slide.tone} label={`${slide.label}, mobile`} className="aspect-[360/420] w-full md:hidden" />
+    <section className="relative -mt-20 min-h-[100svh] md:-mt-[100px]" aria-roledescription="carousel" aria-label="Homepage hero">
+      {slides.map((slide, slideIndex) => (
+        <div
+          key={slide.label}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            slideIndex === index ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
+        >
+          <Placeholder
+            tone={slide.tone}
+            label={`${slide.label}, desktop`}
+            framed={false}
+            className={`hidden h-full w-full md:block ${slideIndex === index ? "kenburns" : ""}`}
+          />
+          <Placeholder
+            tone={slide.mobile}
+            label={`${slide.label}, mobile`}
+            framed={false}
+            className={`h-full w-full md:hidden ${slideIndex === index ? "kenburns" : ""}`}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/25" />
+        </div>
+      ))}
+
+      <div className="relative z-10 flex min-h-[100svh] flex-col justify-end px-6 pb-10 text-primary-2 md:px-12 md:pb-14">
+        {children}
+        <div className="mt-8 flex items-end justify-between font-montserrat text-[11px] tracking-[0.28em]">
+          <div className="flex gap-4">
+            {slides.map((slide, slideIndex) => (
+              <button
+                key={slide.index}
+                type="button"
+                aria-label={`Slide ${slideIndex + 1}`}
+                aria-current={slideIndex === index ? "true" : undefined}
+                onClick={() => setIndex(slideIndex)}
+                className={slideIndex === index ? "text-primary-2" : "text-primary-2/45"}
+              >
+                {slide.index}
+              </button>
+            ))}
           </div>
-        ))}
-        <div className="pointer-events-none absolute inset-0 flex items-end justify-center pb-10 md:pb-16">
-          <p className="font-aboreto text-4xl tracking-[0.45em] text-primary-2 md:text-7xl">SAVIERA</p>
+          <div className="flex gap-6">
+            <button type="button" aria-label="Previous" onClick={() => go(-1)}>
+              PREV
+            </button>
+            <button type="button" aria-label="Next" onClick={() => go(1)}>
+              NEXT
+            </button>
+          </div>
         </div>
       </div>
-      <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-3">
-        {slides.map((slide, slideIndex) => (
-          <button
-            key={slide.label}
-            type="button"
-            aria-label={`Slide ${slideIndex + 1}`}
-            aria-current={slideIndex === index ? "true" : undefined}
-            onClick={() => setIndex(slideIndex)}
-            className={`h-2.5 w-2.5 rounded-full border border-primary-2 ${slideIndex === index ? "bg-primary-2" : "bg-transparent"}`}
-          />
-        ))}
-      </div>
-      <button type="button" aria-label="Previous" onClick={() => go(-1)} className="absolute left-3 top-1/2 z-20 -translate-y-1/2 font-montserrat text-xs tracking-widest text-primary-2">
-        Previous
-      </button>
-      <button type="button" aria-label="Next" onClick={() => go(1)} className="absolute right-3 top-1/2 z-20 -translate-y-1/2 font-montserrat text-xs tracking-widest text-primary-2">
-        Next
-      </button>
     </section>
   );
 }

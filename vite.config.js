@@ -94,6 +94,6 @@ function contentApi() {
 }
 
 export default defineConfig({
-  plugins: [react(), contentApi()],
+  plugins: [react({ jsxRuntime: "automatic" }), contentApi()],
   server: { port: 5173 },
 });

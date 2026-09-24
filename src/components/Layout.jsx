@@ -64,7 +64,7 @@ export default function Layout({ children }) {
     <div className="min-h-screen bg-primary-1 text-secondary-2">
       <header className={`sticky top-0 z-[60] transition-colors duration-500 ${bar}`}>
         <nav className="mx-auto grid h-20 max-w-site grid-cols-[auto_1fr_auto] items-center gap-4 px-6 md:h-[100px] md:grid-cols-[1fr_auto_1fr]">
-          <div className={`hidden items-center justify-between gap-8 font-montserrat text-sm tracking-wide md:flex ${tone}`}>
+          <div className={`hidden items-center justify-between pr-10 font-montserrat text-[11px] tracking-[0.18em] md:flex ${tone}`}>
             {links.map((link) =>
               link.to.startsWith("/#") ? (
                 <a key={link.label} href={link.to}>
