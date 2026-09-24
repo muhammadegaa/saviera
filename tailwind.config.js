@@ -9,7 +9,6 @@ export default {
         "secondary-1": "#BF9553",
         "secondary-2": "#3A3A3A",
         "accent-1": "#800020",
-        "accent-2": "#016064",
         "cream-1": "#E4DDCF",
       },
       fontFamily: {
@@ -19,6 +18,9 @@ export default {
         unbounded: ["Unbounded", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         trap: ["Outfit", "Montserrat", "sans-serif"],
+      },
+      borderColor: {
+        DEFAULT: "#BF9553",
       },
       maxWidth: {
         site: "1440px",

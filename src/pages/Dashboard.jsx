@@ -124,7 +124,7 @@ export default function Dashboard() {
           </>
         )}
         {error && <p className="font-trap text-accent-1">{error}</p>}
-        {notice && <p className="font-trap text-accent-2">{notice}</p>}
+        {notice && <p className="font-trap text-secondary-2">{notice}</p>}
         <button type="submit" className="bg-accent-1 py-3 font-montserrat text-primary-2">
           Save
         </button>

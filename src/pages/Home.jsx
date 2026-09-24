@@ -275,7 +275,7 @@ export default function Home() {
               ["Shopee", "shopee.co.id/thesaviera", SHOPEE_URL],
             ].map(([channel, detail, href]) => (
               <li key={channel} className="border-t border-secondary-1 last:border-b">
-                <a href={href} target="_blank" rel="noreferrer" className="group flex items-center justify-between py-6 text-accent-2">
+                <a href={href} target="_blank" rel="noreferrer" className="group flex items-center justify-between py-6 transition-colors hover:text-accent-1">
                   <span className="font-aboreto text-2xl text-secondary-2 md:text-3xl">{channel}</span>
                   <span className="flex items-center text-sm">
                     {detail}

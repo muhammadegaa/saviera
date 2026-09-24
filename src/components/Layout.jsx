@@ -121,7 +121,7 @@ export default function Layout({ children }) {
               ))}
             </ul>
           </div>
-          <div className="flex flex-col gap-3 font-montserrat text-xs tracking-[0.2em] text-accent-2">
+          <div className="flex flex-col gap-3 font-montserrat text-xs tracking-[0.2em] text-secondary-2">
             <a href={orderLink("a piece from Vol 01. Archetypes")} target="_blank" rel="noreferrer">
               ORDER ON WHATSAPP
             </a>

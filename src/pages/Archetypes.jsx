@@ -99,13 +99,14 @@ export default function Archetypes() {
         <Photo src={{ path: "collection/linen", hd: true }} alt="Linen close to the body" className="warm aspect-[16/10] w-full object-cover" />
         <div>
           <h2 className="font-forum text-3xl md:text-4xl">A playlist to accompany your day</h2>
-          <iframe
-            title="Saviera playlist on Spotify"
-            src="https://open.spotify.com/embed/playlist/0q4jLDoBlFmj9ry2gyRFMo?utm_source=generator&theme=0"
-            loading="lazy"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            className="mt-6 h-[352px] w-full rounded-xl border-0"
-          />
+          <a
+            href="https://open.spotify.com/playlist/0q4jLDoBlFmj9ry2gyRFMo"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-6 inline-flex items-center border-b border-secondary-1 pb-1 font-montserrat text-xs tracking-[0.22em] transition-colors hover:text-accent-1"
+          >
+            LISTEN ON SPOTIFY <IconArrow />
+          </a>
         </div>
       </section>
     </article>
